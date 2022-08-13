@@ -37,6 +37,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-final-form": "^6.5.9",
+    "react-google-recaptcha": "^2.1.0",
     "react-router-dom": "^6.3.0",
     "yup": "^0.32.11",
     "yup-locale-pt": "^0.0.9"

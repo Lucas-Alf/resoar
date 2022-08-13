@@ -1,35 +1,34 @@
 import { Button, Card, CardContent, CircularProgress, Grid } from "@mui/material";
 import { TextField, makeValidate, makeRequired } from "mui-rff";
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Form } from "react-final-form";
 import styles from './styles.module.css'
 import Yup from '../../components/Validations'
 import logo from '../../assets/img/resoar/colorfull/fullname.png'
-import { login } from '../../services/auth'
+import { register } from '../../services/auth'
 import { useSnackbar } from "notistack";
 import { Link, useNavigate } from "react-router-dom";
-import { get } from "lodash";
+import ReCAPTCHA from "react-google-recaptcha"
 
 function RegisterForm() {
-  useEffect(() => {
-    localStorage.clear()
-  }, [])
-
   const navigate = useNavigate();
+  const captchaRef = useRef(null)
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false)
   const initialValues = {
     name: '',
     email: '',
     password: '',
-    repeatPassword: '',
+    confirmPassword: '',
   }
 
   const schema = Yup.object().shape({
     name: Yup.string().required(),
     email: Yup.string().email().required(),
-    password: Yup.string().required(),
-    repeatPassword: Yup.string().required(),
+    password: Yup.string().min(6).required(),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], "As senhas não conferem.")
+      .required()
   });
 
   const validate = makeValidate(schema);
@@ -37,11 +36,14 @@ function RegisterForm() {
 
   const onSubmit = (values) => {
     setLoading(true)
-    login(values).then(res => {
+    const token = captchaRef.current.getValue();
+    register({ ...values, token }).then(res => {
       const { data } = res
       if (data.success) {
-        localStorage.setItem('auth', JSON.stringify(get(data, 'data')))
-        navigate("/home");
+        enqueueSnackbar(`Usuário cadastrado com sucesso`, {
+          variant: "success",
+        });
+        navigate("/");
       } else {
         console.error(data.message)
         enqueueSnackbar(data.message, {
@@ -50,10 +52,11 @@ function RegisterForm() {
       }
     }).catch(err => {
       console.error(err)
-      enqueueSnackbar(`Ocorreu um erro ao realizar o login`, {
+      enqueueSnackbar(`Ocorreu um erro ao realizar o cadastro`, {
         variant: "error",
       });
     }).finally(() => {
+      captchaRef.current.reset();
       setLoading(false)
     })
   }
@@ -65,7 +68,7 @@ function RegisterForm() {
       alignItems="center"
       justify="center"
     >
-      <Card sx={{ minWidth: 350 }}>
+      <Card sx={{ minWidth: 330, maxWidth: 330 }}>
         <CardContent>
           <img src={logo} className={styles.logoImage} />
           <span className={styles.loginText} >Nova conta</span>
@@ -105,10 +108,16 @@ function RegisterForm() {
                   <Grid item xs={6}>
                     <TextField
                       label="Repita a senha"
-                      name="repeatPassword"
+                      name="confirmPassword"
                       type="password"
                       size="small"
-                      required={required.repeatPassword}
+                      required={required.confirmPassword}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <ReCAPTCHA
+                      sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                      ref={captchaRef}
                     />
                   </Grid>
                 </Grid>
