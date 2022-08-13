@@ -1,12 +1,23 @@
-import { Button, Card, CardContent, Grid } from "@mui/material";
+import { Button, Card, CardContent, CircularProgress, Grid } from "@mui/material";
 import { TextField, makeValidate, makeRequired } from "mui-rff";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "react-final-form";
 import styles from './styles.module.css'
 import Yup from '../../components/Validations'
 import logo from '../../assets/img/resoar/colorfull/fullname.png'
+import { login } from '../../services/auth'
+import { useSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
+import { get } from "lodash";
 
 function LoginForm() {
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState(false)
+  const initialValues = {
+    email: '',
+    password: ''
+  }
 
   const schema = Yup.object().shape({
     email: Yup.string().email().required(),
@@ -16,12 +27,32 @@ function LoginForm() {
   const validate = makeValidate(schema);
   const required = makeRequired(schema);
 
-  const initialValues = {
-    email: '',
-    password: ''
-  }
+  useEffect(() => {
+    localStorage.clear()
+  }, [])
 
-  const onSubmit = () => { }
+  const onSubmit = (values) => {
+    setLoading(true)
+    login(values).then(res => {
+      const { data } = res
+      if (data.success) {
+        localStorage.setItem('auth', JSON.stringify(get(data, 'data')))
+        navigate("/home");
+      } else {
+        console.error(data.message)
+        enqueueSnackbar(data.message, {
+          variant: "error",
+        });
+      }
+    }).catch(err => {
+      console.error(err)
+      enqueueSnackbar(`Ocorreu um erro ao realizar o login`, {
+        variant: "error",
+      });
+    }).finally(() => {
+      setLoading(false)
+    })
+  }
 
   return (
     <Grid
@@ -38,6 +69,7 @@ function LoginForm() {
             onSubmit={onSubmit}
             initialValues={initialValues}
             validate={validate}
+            loading={loading}
             render={({ handleSubmit }) => (
               <form onSubmit={handleSubmit} noValidate>
                 <Grid container direction={"column"} spacing={2}>
@@ -59,10 +91,17 @@ function LoginForm() {
                     />
                   </Grid>
                 </Grid>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  className={styles.loginButton}
+                  disabled={loading}
+                >
+                  {loading ? (<CircularProgress size={25} className={styles.loadingButton} />) : 'Entrar'}
+                </Button>
               </form>
             )}
           />
-          <Button variant="contained" className={styles.loginButton} >Entrar</Button>
           <div className={styles.footerDiv}>
             <span className={styles.lostPasswordText}>Esqueci a senha</span>
             <span className={styles.registerText}>Registrar-se</span>

@@ -25,6 +25,10 @@
   margin-top: 15px !important;
 }
 
+.loadingButton {
+  color: gray !important;
+}
+
 .loginText {
   margin-bottom: 10px;
   text-align: center;
