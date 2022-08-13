@@ -1,14 +1,41 @@
-import './App.css'
+import React, { useState, createRef } from "react";
+import { useRoutes } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import routes from "./routes";
+import lightTheme from "./themes/light";
+import darkTheme from "./themes/dark";
+import CssBaseline from "@mui/material/CssBaseline";
+import { SnackbarProvider } from "notistack";
+import Slide from "@mui/material/Slide";
+import IconButton from "@mui/material/IconButton";
+import { Close as CloseIcon } from "@mui/icons-material";
 
-function App() {
+export default function App() {
+  const [mode] = useState(localStorage.getItem('theme') || 'light')
+  const theme = createTheme(mode === 'light' ? lightTheme : darkTheme)
+  const snackbarRef = createRef();
+  const onClickDismiss = (key) => () => {
+    snackbarRef.current.closeSnackbar(key);
+  };
 
   return (
-    <>
-      <div class='center-text'>
-        <h1>🏗️ Under development</h1>
-      </div>
-    </>
-  )
+    <ThemeProvider theme={theme}>
+      <SnackbarProvider
+        ref={snackbarRef}
+        TransitionComponent={Slide}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        action={(key) => (
+          <IconButton onClick={onClickDismiss(key)}>
+            <CloseIcon htmlColor="white" />
+          </IconButton>
+        )}
+      >
+        <CssBaseline />
+        <>{useRoutes(routes)}</>
+      </SnackbarProvider>
+    </ThemeProvider>
+  );
 }
-
-export default App

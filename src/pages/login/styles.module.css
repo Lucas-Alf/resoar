@@ -1,0 +1,61 @@
+.imageContainer {
+  background-image: url('../../assets/img/background.png');
+  background-size: cover;
+  background-color: #FAFAFA;
+  height: 100vh;
+}
+
+.root {
+  min-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card {
+  max-width: 40%;
+  min-height: 30vh;
+  display: flex;
+  align-items: center;
+}
+
+.loginButton {
+  width: 100%;
+  margin-top: 15px !important;
+}
+
+.loginText {
+  margin-bottom: 10px;
+  text-align: center;
+  display: block;
+}
+
+.logoImage {
+  max-width: 240px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px !important;
+  display: block;
+}
+
+.footerDiv {
+  margin-top: 5px !important;
+  display: block;
+}
+
+.lostPasswordText {
+  cursor: pointer;
+}
+
+.registerText {
+  cursor: pointer;
+  float: right;
+}
+
+.copyrightText {
+  font-size: 13px;
+  text-align: center;
+  margin-top: 15px;
+  display: block;
+}
