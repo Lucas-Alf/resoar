@@ -34,7 +34,7 @@ export default function App() {
         )}
       >
         <CssBaseline />
-        <>{useRoutes(routes)}</>
+        {useRoutes(routes)}
       </SnackbarProvider>
     </ThemeProvider>
   );

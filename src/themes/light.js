@@ -19,8 +19,8 @@ const theme = {
       allVariants: {
         color: primary,
       },
-    },
-  },
+    }
+  }
 };
 
 export default theme;

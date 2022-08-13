@@ -10,7 +10,7 @@ import { useSnackbar } from "notistack";
 import { Link, useNavigate } from "react-router-dom";
 import { get } from "lodash";
 
-function LoginForm() {
+function RegisterForm() {
   useEffect(() => {
     localStorage.clear()
   }, [])
@@ -19,13 +19,17 @@ function LoginForm() {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false)
   const initialValues = {
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    repeatPassword: '',
   }
 
   const schema = Yup.object().shape({
+    name: Yup.string().required(),
     email: Yup.string().email().required(),
     password: Yup.string().required(),
+    repeatPassword: Yup.string().required(),
   });
 
   const validate = makeValidate(schema);
@@ -64,7 +68,7 @@ function LoginForm() {
       <Card sx={{ minWidth: 350 }}>
         <CardContent>
           <img src={logo} className={styles.logoImage} />
-          <span className={styles.loginText} >Entre com seu email e senha</span>
+          <span className={styles.loginText} >Nova conta</span>
           <Form
             onSubmit={onSubmit}
             initialValues={initialValues}
@@ -73,6 +77,14 @@ function LoginForm() {
             render={({ handleSubmit }) => (
               <form onSubmit={handleSubmit} noValidate>
                 <Grid container direction={"column"} spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField
+                      label="Nome"
+                      name="name"
+                      size="small"
+                      required={required.name}
+                    />
+                  </Grid>
                   <Grid item xs={6}>
                     <TextField
                       label="Email"
@@ -90,6 +102,15 @@ function LoginForm() {
                       required={required.password}
                     />
                   </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      label="Repita a senha"
+                      name="repeatPassword"
+                      type="password"
+                      size="small"
+                      required={required.repeatPassword}
+                    />
+                  </Grid>
                 </Grid>
                 <Button
                   variant="contained"
@@ -97,14 +118,13 @@ function LoginForm() {
                   className={styles.loginButton}
                   disabled={loading}
                 >
-                  {loading ? (<CircularProgress size={25} className={styles.loadingButton} />) : 'Entrar'}
+                  {loading ? (<CircularProgress size={25} className={styles.loadingButton} />) : 'Cadastrar-se'}
                 </Button>
               </form>
             )}
           />
           <div className={styles.footerDiv}>
-            <Link to={"/recover"} className={styles.lostPasswordText}>Esqueci a senha</Link>
-            <Link to={"/register"} className={styles.registerText}>Registrar-se</Link>
+            <Link to={"/"} className={styles.backText}>Voltar</Link>
           </div>
           <span className={styles.copyrightText} >Copyright © RESOAR {new Date().getFullYear()}</span>
         </CardContent>
@@ -113,4 +133,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default RegisterForm;

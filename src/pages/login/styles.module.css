@@ -49,12 +49,21 @@
 }
 
 .lostPasswordText {
-  cursor: pointer;
+  text-decoration: none;
+  color: #466362
+}
+
+.backText {
+  text-decoration: none;
+  color: #466362;
+  text-align: center;
+  display: block;
 }
 
 .registerText {
-  cursor: pointer;
+  text-decoration: none;
   float: right;
+  color: #466362
 }
 
 .copyrightText {
@@ -62,4 +71,36 @@
   text-align: center;
   margin-top: 15px;
   display: block;
+}
+
+.fadeIn {
+  animation: 0.5s fadeIn forwards;
+}
+
+.fadeOut {
+  animation: 0.5s fadeOut forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-20px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+
+  to {
+    transform: translate(-20px, 0);
+    opacity: 0;
+  }
 }
