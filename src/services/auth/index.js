@@ -8,4 +8,8 @@ const register = async (obj) => {
   return httpPost("/auth/register", obj);
 };
 
-export { login, register };
+const recover = async (obj) => {
+  return httpPost("/auth/recover", obj);
+};
+
+export { login, register, recover };

@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import styles from './styles.module.css'
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import RecoverForm from "./RecoverForm";
 
 function LoginLayout() {
   const location = useLocation();
@@ -33,6 +34,7 @@ function LoginLayout() {
                 <Route path="*" element={<LoginForm />} />
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/register" element={<RegisterForm />} />
+                <Route path="/recover" element={<RecoverForm />} />
               </Routes>
             </div>
           </Grid>
