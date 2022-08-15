@@ -9,9 +9,11 @@ import { register } from '../../services/auth'
 import { useSnackbar } from "notistack";
 import { Link, useNavigate } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha"
+import { useTheme } from '@mui/styles';
 
 function RegisterForm() {
   const navigate = useNavigate();
+  const theme = useTheme();
   const captchaRef = useRef(null)
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false)
@@ -133,7 +135,7 @@ function RegisterForm() {
             )}
           />
           <div className={styles.footerDiv}>
-            <Link to={"/"} className={styles.backText}>Voltar</Link>
+            <Link to={"/"} style={{ color: theme.palette.primary.main }} className={styles.backText}>Voltar</Link>
           </div>
           <span className={styles.copyrightText} >Copyright © RESOAR {new Date().getFullYear()}</span>
         </CardContent>

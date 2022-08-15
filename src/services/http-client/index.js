@@ -14,16 +14,16 @@ const httpGet = async (url, data, params = {}) => {
   });
 };
 
-const httpPost = async (url, data) => {
-  return http.post(url, data);
+const httpPost = async (url, data, params) => {
+  return http.post(url, data, params);
 };
 
-const httpPut = async (url, data) => {
-  return http.put(url, data);
+const httpPut = async (url, data, params) => {
+  return http.put(url, data, params);
 };
 
-const httpDelete = async (url) => {
-  return http.delete(url);
+const httpDelete = async (url, params) => {
+  return http.delete(url, params);
 };
 
 export { httpGet, httpPost, httpPut, httpDelete };

@@ -50,12 +50,10 @@
 
 .lostPasswordText {
   text-decoration: none;
-  color: #466362
 }
 
 .backText {
   text-decoration: none;
-  color: #466362;
   text-align: center;
   display: block;
 }
@@ -63,7 +61,6 @@
 .registerText {
   text-decoration: none;
   float: right;
-  color: #466362
 }
 
 .copyrightText {

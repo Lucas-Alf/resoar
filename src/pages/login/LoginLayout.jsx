@@ -5,6 +5,7 @@ import styles from './styles.module.css'
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import RecoverForm from "./RecoverForm";
+import ResetPassword from "./ResetPasswordForm";
 
 function LoginLayout() {
   const location = useLocation();
@@ -19,8 +20,8 @@ function LoginLayout() {
     <>
       <div className={styles.imageContainer}>
         <Grid container>
-          <Grid item md={4} xs={false}></Grid>
-          <Grid item md={8} xs={12}>
+          <Grid item lg={4} md={false} xs={false}></Grid>
+          <Grid item lg={8} xs={12}>
             <div
               className={styles[transitionStage]}
               onAnimationEnd={() => {
@@ -35,6 +36,7 @@ function LoginLayout() {
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/register" element={<RegisterForm />} />
                 <Route path="/recover" element={<RecoverForm />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
               </Routes>
             </div>
           </Grid>
