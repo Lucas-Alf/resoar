@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { TextField, makeValidate, makeRequired } from "mui-rff";
 import React, { useRef, useState } from "react";
 import { Form } from "react-final-form";
@@ -9,6 +9,7 @@ import { useSnackbar } from "notistack";
 import { Link, useNavigate } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha"
 import { useTheme } from '@mui/styles';
+import LoadingButton from "../../components/LoadingButton";
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -109,14 +110,7 @@ function RegisterForm() {
               ref={captchaRef}
               size="normal"
             />
-            <Button
-              variant="contained"
-              type="submit"
-              className={styles.loginButton}
-              disabled={loading}
-            >
-              {loading ? (<CircularProgress size={25} className={styles.loadingButton} />) : 'Cadastrar-se'}
-            </Button>
+            <LoadingButton text="Cadastrar-se" loading={loading} className={styles.loginButton} />
           </Stack>
         )}
       />
