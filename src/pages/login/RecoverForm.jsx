@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Grid, Stack } from "@mui/material";
+import { Button, CircularProgress, Stack } from "@mui/material";
 import { TextField, makeValidate, makeRequired } from "mui-rff";
 import React, { useRef, useState } from "react";
 import { Form } from "react-final-form";
@@ -70,22 +70,16 @@ function RegisterForm() {
             onSubmit={handleSubmit}
             autoComplete="off"
           >
-            <Grid container direction={"column"} spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  label="Email"
-                  name="email"
-                  size="small"
-                  required={required.email}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <ReCAPTCHA
-                  sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-                  ref={captchaRef}
-                />
-              </Grid>
-            </Grid>
+            <TextField
+              label="Email"
+              name="email"
+              size="small"
+              required={required.email}
+            />
+            <ReCAPTCHA
+              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+              ref={captchaRef}
+            />
             <Button
               variant="contained"
               type="submit"
