@@ -1,10 +1,9 @@
-import { Button, Card, CardContent, CircularProgress, Grid } from "@mui/material";
+import { Button, CircularProgress, Grid, Stack } from "@mui/material";
 import { TextField, makeValidate, makeRequired } from "mui-rff";
 import React, { useEffect, useState } from "react";
 import { Form } from "react-final-form";
 import styles from './styles.module.css'
 import Yup from '../../components/Validations'
-import logo from '../../assets/img/resoar/colorfull/fullname.png'
 import { login } from '../../services/auth'
 import { useSnackbar } from "notistack";
 import { Link, useNavigate } from "react-router-dom";
@@ -57,61 +56,56 @@ function LoginForm() {
   }
 
   return (
-    <Grid
-      container
-      className={styles.root}
-      alignItems="center"
-      justify="center"
-    >
-      <Card sx={{ minWidth: 350 }}>
-        <CardContent>
-          <img src={logo} className={styles.logoImage} />
-          <span className={styles.loginText} >Entre com seu email e senha</span>
-          <Form
-            onSubmit={onSubmit}
-            initialValues={initialValues}
-            validate={validate}
-            loading={loading}
-            render={({ handleSubmit }) => (
-              <form onSubmit={handleSubmit} noValidate>
-                <Grid container direction={"column"} spacing={2}>
-                  <Grid item xs={6}>
-                    <TextField
-                      label="Email"
-                      name="email"
-                      size="small"
-                      required={required.email}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      label="Senha"
-                      name="password"
-                      type="password"
-                      size="small"
-                      required={required.password}
-                    />
-                  </Grid>
-                </Grid>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  className={styles.loginButton}
-                  disabled={loading}
-                >
-                  {loading ? (<CircularProgress size={25} className={styles.loadingButton} />) : 'Entrar'}
-                </Button>
-              </form>
-            )}
-          />
-          <div className={styles.footerDiv}>
-            <Link to={"/recover"} style={{ color: theme.palette.primary.main }} className={styles.lostPasswordText}>Esqueci a senha</Link>
-            <Link to={"/register"} style={{ color: theme.palette.primary.main }} className={styles.registerText}>Registrar-se</Link>
-          </div>
-          <span className={styles.copyrightText} >Copyright © RESOAR {new Date().getFullYear()}</span>
-        </CardContent>
-      </Card>
-    </Grid>
+    <>
+      <span className={styles.loginText} >Entre com seu email e senha</span>
+      <Form
+        onSubmit={onSubmit}
+        initialValues={initialValues}
+        validate={validate}
+        loading={loading}
+        render={({ handleSubmit }) => (
+          <Stack
+            component="form"
+            spacing={2}
+            noValidate
+            onSubmit={handleSubmit}
+            autoComplete="off"
+          >
+            <Grid container direction={"column"} spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  label="Email"
+                  name="email"
+                  size="small"
+                  required={required.email}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Senha"
+                  name="password"
+                  type="password"
+                  size="small"
+                  required={required.password}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              variant="contained"
+              type="submit"
+              className={styles.loginButton}
+              disabled={loading}
+            >
+              {loading ? (<CircularProgress size={25} className={styles.loadingButton} />) : 'Entrar'}
+            </Button>
+          </Stack>
+        )}
+      />
+      <div className={styles.footerDiv}>
+        <Link to={"/recover"} style={{ color: theme.palette.primary.main }} className={styles.lostPasswordText}>Esqueci a senha</Link>
+        <Link to={"/register"} style={{ color: theme.palette.primary.main }} className={styles.registerText}>Registrar-se</Link>
+      </div>
+    </>
   );
 }
 

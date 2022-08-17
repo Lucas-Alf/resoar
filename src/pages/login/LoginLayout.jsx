@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Card, CardContent, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import styles from './styles.module.css'
@@ -6,6 +6,7 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import RecoverForm from "./RecoverForm";
 import ResetPassword from "./ResetPasswordForm";
+import logo from '../../assets/img/resoar/colorfull/fullname.png'
 
 function LoginLayout() {
   const location = useLocation();
@@ -22,23 +23,36 @@ function LoginLayout() {
         <Grid container>
           <Grid item lg={4} md={false} xs={false}></Grid>
           <Grid item lg={8} xs={12}>
-            <div
-              className={styles[transitionStage]}
-              onAnimationEnd={() => {
-                if (transitionStage === "fadeOut") {
-                  setTransitionStage("fadeIn");
-                  setDisplayLocation(location);
-                }
-              }}
+            <Grid
+              container
+              className={styles.root}
+              alignItems="center"
+              justify="center"
             >
-              <Routes>
-                <Route path="*" element={<LoginForm />} />
-                <Route path="/login" element={<LoginForm />} />
-                <Route path="/register" element={<RegisterForm />} />
-                <Route path="/recover" element={<RecoverForm />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-              </Routes>
-            </div>
+              <div
+                className={styles[transitionStage]}
+                onAnimationEnd={() => {
+                  if (transitionStage === "fadeOut") {
+                    setTransitionStage("fadeIn");
+                    setDisplayLocation(location);
+                  }
+                }}
+              >
+                <Card sx={{ width: 335 }}>
+                  <CardContent>
+                    <img src={logo} className={styles.logoImage} />
+                    <Routes>
+                      <Route path="*" element={<LoginForm />} />
+                      <Route path="/login" element={<LoginForm />} />
+                      <Route path="/register" element={<RegisterForm />} />
+                      <Route path="/recover" element={<RecoverForm />} />
+                      <Route path="/reset-password" element={<ResetPassword />} />
+                    </Routes>
+                    <span className={styles.copyrightText} >Copyright © RESOAR {new Date().getFullYear()}</span>
+                  </CardContent>
+                </Card>
+              </div>
+            </Grid>
           </Grid>
         </Grid>
       </div>
