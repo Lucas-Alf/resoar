@@ -1,0 +1,61 @@
+.imageContainer {
+  background-image: url('../../../assets/img/background.png');
+  background-size: cover;
+  background-color: #FAFAFA;
+  height: 100vh;
+}
+
+.root {
+  min-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.fadeIn {
+  animation: 0.5s fadeIn forwards;
+}
+
+.fadeOut {
+  animation: 0.5s fadeOut forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-20px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+
+  to {
+    transform: translate(-20px, 0);
+    opacity: 0;
+  }
+}
+
+.logoImage {
+  max-width: 240px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px !important;
+  display: block;
+}
+
+.copyrightText {
+  font-size: 13px;
+  text-align: center;
+  margin-top: 15px;
+  display: block;
+}

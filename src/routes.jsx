@@ -1,8 +1,10 @@
 import React from "react";
-import LoginLayout from "./pages/login/LoginLayout"
+import LoginLayout from "./components/Layout/LoginLayout"
+import AppLayout from "./components/Layout/AppLayout"
 
 const routes = [
-  { path: "/*", element: <LoginLayout /> }
+  { path: "/*", element: <LoginLayout /> },
+  { path: "/app", element: <AppLayout /> }
 ];
 
 export default routes;

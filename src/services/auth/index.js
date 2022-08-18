@@ -1,4 +1,6 @@
+import { get, isEmpty } from "lodash";
 import { httpPost } from "../http-client";
+import jwt_decode from "jwt-decode";
 
 const login = async (obj) => {
   return httpPost("/auth/login", obj);
@@ -15,11 +17,42 @@ const recover = async (obj) => {
 const resetPassword = async (obj, token) => {
   return httpPost("/auth/reset-password", obj, {
     headers: {
-        'authorization': `Bearer ${token}`,
-        'Accept' : 'application/json',
-        'Content-Type': 'application/json'
+      'authorization': `Bearer ${token}`,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
     }
   });
 };
 
-export { login, register, recover, resetPassword };
+const isAuthenticated = () => {
+  const localData = localStorage.getItem("authToken");
+  if (!localData || isEmpty(localData))
+    return false;
+
+  const authToken = JSON.parse(localData)
+  const expiration = new Date(get(authToken, "expiration"));
+  return expiration < new Date()
+}
+
+const getUser = () => {
+  const localData = localStorage.getItem("authToken");
+  if (!localData || isEmpty(localData))
+    return null;
+
+  const authToken = JSON.parse(localData)
+  return jwt_decode(get(authToken, 'token'))
+}
+
+const getUserId = () => get(getUser(), 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier', '')
+const getUserName = () => get(getUser(), 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name', '')
+
+export {
+  login,
+  register,
+  recover,
+  resetPassword,
+  isAuthenticated,
+  getUser,
+  getUserId,
+  getUserName
+};

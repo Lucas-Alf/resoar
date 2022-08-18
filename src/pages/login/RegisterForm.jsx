@@ -108,7 +108,6 @@ function RegisterForm() {
             <ReCAPTCHA
               sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
               ref={captchaRef}
-              size="normal"
             />
             <LoadingButton text="Cadastrar-se" loading={loading} className={styles.loginButton} />
           </Stack>

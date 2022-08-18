@@ -13,6 +13,17 @@ import LoadingButton from '../../components/LoadingButton'
 
 function LoginForm() {
   useEffect(() => {
+    document.cookie = 'HSID=None; SameSite=None; Secure';
+    document.cookie = 'SSID=None; SameSite=None; Secure';
+    document.cookie = 'APISID=None; SameSite=None; Secure';
+    document.cookie = 'SAPISID=None; SameSite=None; Secure';
+    document.cookie = '__Secure-1PAPISID	=None; SameSite=None; Secure';
+    document.cookie = 'OTZ=None; SameSite=None; Secure';
+    document.cookie = '__Secure-1PSID=None; SameSite=None; Secure';
+    document.cookie = 'UULE=None; SameSite=None; Secure';
+    document.cookie = 'SIDCC=None; SameSite=None; Secure';
+    document.cookie = '__Secure-1PSIDCC=None; SameSite=None; Secure';
+
     localStorage.clear()
   }, [])
 
@@ -38,8 +49,8 @@ function LoginForm() {
     login(values).then(res => {
       const { data } = res
       if (data.success) {
-        localStorage.setItem('auth', JSON.stringify(get(data, 'data')))
-        navigate("/home");
+        localStorage.setItem('authToken', JSON.stringify(get(data, 'data')))
+        navigate("/app");
       } else {
         console.error(data.message)
         enqueueSnackbar(data.message, {

@@ -2,11 +2,11 @@ import { Card, CardContent, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import styles from './styles.module.css'
-import LoginForm from "./LoginForm";
-import RegisterForm from "./RegisterForm";
-import RecoverForm from "./RecoverForm";
-import ResetPassword from "./ResetPasswordForm";
-import logo from '../../assets/img/resoar/colorfull/fullname.png'
+import LoginForm from "../../../pages/login/LoginForm";
+import RegisterForm from "../../../pages/login/RegisterForm";
+import RecoverForm from "../../../pages/login/RecoverForm";
+import ResetPassword from "../../../pages/login/ResetPasswordForm";
+import logo from '../../../assets/img/resoar/colorfull/fullname.png'
 
 function LoginLayout() {
   const location = useLocation();
