@@ -1,4 +1,4 @@
-import React, { useState, createRef } from "react";
+import React, { useState, createRef, useEffect } from "react";
 import { useRoutes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import routes from "./routes";
@@ -11,12 +11,23 @@ import IconButton from "@mui/material/IconButton";
 import { Close as CloseIcon } from "@mui/icons-material";
 
 export default function App() {
-  const [mode] = useState(localStorage.getItem('theme') || 'light')
+  const [mode, setMode] = useState(localStorage.getItem('theme') || 'light')
   const theme = createTheme(mode === 'light' ? lightTheme : darkTheme)
+
   const snackbarRef = createRef();
   const onClickDismiss = (key) => () => {
     snackbarRef.current.closeSnackbar(key);
   };
+
+  useEffect(() => {
+    window.currentTheme = mode;
+    window.toggleTheme = () => {
+      const newMode = mode === 'light' ? 'dark' : 'light'
+      setMode(newMode);
+      localStorage.setItem('theme', newMode)
+      window.currentTheme = newMode;
+    };
+  }, [mode])
 
   return (
     <ThemeProvider theme={theme}>

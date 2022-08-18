@@ -1,11 +1,12 @@
 import React from "react";
-import { getUserName } from "../../../services/auth"
+import { Outlet } from "react-router-dom";
+import AppBar from '../../AppBar'
 
 function AppLayout() {
-  const userName = getUserName()
   return (
     <>
-      <div>Hello {userName}!</div>
+      <AppBar />
+      <Outlet />
     </>
   );
 }

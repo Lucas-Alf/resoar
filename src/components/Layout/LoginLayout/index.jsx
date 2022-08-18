@@ -1,11 +1,7 @@
 import { Card, CardContent, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import styles from './styles.module.css'
-import LoginForm from "../../../pages/login/LoginForm";
-import RegisterForm from "../../../pages/login/RegisterForm";
-import RecoverForm from "../../../pages/login/RecoverForm";
-import ResetPassword from "../../../pages/login/ResetPasswordForm";
 import logo from '../../../assets/img/resoar/colorfull/fullname.png'
 
 function LoginLayout() {
@@ -41,13 +37,7 @@ function LoginLayout() {
                 <Card sx={{ width: 335 }}>
                   <CardContent>
                     <img src={logo} className={styles.logoImage} />
-                    <Routes>
-                      <Route path="*" element={<LoginForm />} />
-                      <Route path="/login" element={<LoginForm />} />
-                      <Route path="/register" element={<RegisterForm />} />
-                      <Route path="/recover" element={<RecoverForm />} />
-                      <Route path="/reset-password" element={<ResetPassword />} />
-                    </Routes>
+                    <Outlet />
                     <span className={styles.copyrightText} >Copyright © RESOAR {new Date().getFullYear()}</span>
                   </CardContent>
                 </Card>

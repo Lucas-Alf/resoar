@@ -12,7 +12,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import isEmpty from "lodash/isEmpty";
 import { Add as AddIcon } from "@mui/icons-material";
-import PropTypes from 'prop-types';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -54,7 +53,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar({ mode, toggleColorMode }) {
+export default function PrimarySearchAppBar() {
   const navigate = useNavigate();
 
   const handleSearch = (evt) => {
@@ -77,9 +76,9 @@ export default function PrimarySearchAppBar({ mode, toggleColorMode }) {
             color="inherit"
             aria-label="Dark Mode"
             sx={{ mr: 2 }}
-            onClick={() => toggleColorMode()}
+            onClick={() => window.toggleTheme()}
           >
-            {mode === "dark"
+            {window.currentTheme === "dark"
               ? <DarkModeIcon />
               : <LightModeIcon />
             }
@@ -126,6 +125,5 @@ export default function PrimarySearchAppBar({ mode, toggleColorMode }) {
 }
 
 PrimarySearchAppBar.propTypes = {
-  mode: PropTypes.string,
-  toggleColorMode: PropTypes.func
+
 }
