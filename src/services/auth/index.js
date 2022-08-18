@@ -31,7 +31,7 @@ const isAuthenticated = () => {
 
   const authToken = JSON.parse(localData)
   const expiration = new Date(get(authToken, "expiration"));
-  return expiration < new Date()
+  return expiration > new Date()
 }
 
 const getUser = () => {

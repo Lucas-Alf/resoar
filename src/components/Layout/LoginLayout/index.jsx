@@ -1,13 +1,23 @@
 import { Card, CardContent, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styles from './styles.module.css'
 import logo from '../../../assets/img/resoar/colorfull/fullname.png'
+import { isAuthenticated } from '../../../services/auth';
 
 function LoginLayout() {
+  const navigate = useNavigate();
   const location = useLocation();
   const [displayLocation, setDisplayLocation] = useState(location);
   const [transitionStage, setTransitionStage] = useState("fadeIn");
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate('/app');
+    } else {
+      localStorage.clear()
+    }
+  }, [navigate]);
 
   useEffect(() => {
     if (location !== displayLocation) setTransitionStage("fadeOut");

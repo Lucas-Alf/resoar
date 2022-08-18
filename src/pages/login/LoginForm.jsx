@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import { TextField, makeValidate, makeRequired } from "mui-rff";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Form } from "react-final-form";
 import styles from './styles.module.css'
 import Yup from '../../components/Validations'
@@ -12,21 +12,6 @@ import { useTheme } from '@mui/styles';
 import LoadingButton from '../../components/LoadingButton'
 
 function LoginForm() {
-  useEffect(() => {
-    document.cookie = 'HSID=None; SameSite=None; Secure';
-    document.cookie = 'SSID=None; SameSite=None; Secure';
-    document.cookie = 'APISID=None; SameSite=None; Secure';
-    document.cookie = 'SAPISID=None; SameSite=None; Secure';
-    document.cookie = '__Secure-1PAPISID	=None; SameSite=None; Secure';
-    document.cookie = 'OTZ=None; SameSite=None; Secure';
-    document.cookie = '__Secure-1PSID=None; SameSite=None; Secure';
-    document.cookie = 'UULE=None; SameSite=None; Secure';
-    document.cookie = 'SIDCC=None; SameSite=None; Secure';
-    document.cookie = '__Secure-1PSIDCC=None; SameSite=None; Secure';
-
-    localStorage.clear()
-  }, [])
-
   const theme = useTheme();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
