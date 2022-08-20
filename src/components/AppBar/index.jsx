@@ -15,6 +15,8 @@ import whiteLogo from '../../assets/img/resoar/white/fullname.png'
 import PropTypes from 'prop-types';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import { getShortUserName } from '../../services/auth'
+import { Typography } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -111,6 +113,9 @@ export default function SearchAppBar({ toggleDrawer }) {
           />
         </Search>
         <Box sx={{ flexGrow: 1 }} />
+        <Hidden mdDown>
+          <Typography variant="body2" style={{ fontWeight: 600 }}>{getShortUserName()}</Typography>
+        </Hidden>
         <Box>
           <IconButton
             aria-label="Dark Mode"

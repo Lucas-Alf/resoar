@@ -11,6 +11,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import FolderIcon from '@mui/icons-material/Folder';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import PropTypes from 'prop-types';
 import DrawerHeader from '../DrawerHeader';
@@ -66,14 +67,19 @@ export default function MiniDrawer({ open }) {
       onClick: () => { navigate("/app"); }
     },
     {
+      title: "Novas Publicações",
+      icon: <NewspaperIcon />,
+      onClick: () => { navigate("/news"); }
+    },
+    {
       title: "Minhas Publicações",
       icon: <FolderIcon />,
-      onClick: () => { navigate("/app"); }
+      onClick: () => { navigate("/my-publications"); }
     },
     {
       title: "Publicações Salvas",
       icon: <BookmarkIcon />,
-      onClick: () => { navigate("/app"); }
+      onClick: () => { navigate("/saved"); }
     }
   ]
 
