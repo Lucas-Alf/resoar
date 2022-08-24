@@ -21,6 +21,7 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@fontsource/roboto": "^4.5.5",
+    "@hcaptcha/react-hcaptcha": "^1.4.4",
     "@mui/icons-material": "^5.6.2",
     "@mui/material": "^5.10.0",
     "@mui/styles": "^5.9.3",
@@ -38,7 +39,6 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-final-form": "^6.5.9",
-    "react-google-recaptcha": "^2.1.0",
     "react-router-dom": "^6.3.0",
     "yup": "^0.32.11",
     "yup-locale-pt": "^0.0.9"

@@ -7,15 +7,18 @@ import Yup from '../../components/Validations'
 import { register } from '../../services/auth'
 import { useSnackbar } from "notistack";
 import { Link, useNavigate } from "react-router-dom";
-import ReCAPTCHA from "react-google-recaptcha"
 import { useTheme } from '@mui/styles';
 import LoadingButton from "../../components/LoadingButton";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
+import { isEmpty } from "lodash";
 
 function RegisterForm() {
   const navigate = useNavigate();
   const theme = useTheme();
-  const captchaRef = useRef(null)
+
   const { enqueueSnackbar } = useSnackbar();
+  const captchaRef = useRef(null)
+  const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(false)
   const initialValues = {
     name: '',
@@ -37,30 +40,36 @@ function RegisterForm() {
   const required = makeRequired(schema);
 
   const onSubmit = (values) => {
-    setLoading(true)
-    const token = captchaRef.current.getValue();
-    register({ ...values, token }).then(res => {
-      const { data } = res
-      if (data.success) {
-        enqueueSnackbar(`Usuário cadastrado com sucesso`, {
-          variant: "success",
-        });
-        navigate("/");
-      } else {
-        console.error(data.message)
-        enqueueSnackbar(data.message, {
-          variant: "error",
-        });
-      }
-    }).catch(err => {
-      console.error(err)
-      enqueueSnackbar(`Ocorreu um erro ao realizar o cadastro`, {
+    if (isEmpty(token)) {
+      enqueueSnackbar(`Desafio hCaptcha é obrigatário`, {
         variant: "error",
       });
-    }).finally(() => {
-      captchaRef.current.reset();
-      setLoading(false)
-    })
+    } else {
+      setLoading(true)
+      register({ ...values, token }).then(res => {
+        const { data } = res
+        if (data.success) {
+          enqueueSnackbar(`Usuário cadastrado com sucesso`, {
+            variant: "success",
+          });
+          navigate("/");
+        } else {
+          console.error(data.message)
+          enqueueSnackbar(data.message, {
+            variant: "error",
+          });
+        }
+      }).catch(err => {
+        console.error(err)
+        enqueueSnackbar(`Ocorreu um erro ao realizar o cadastro`, {
+          variant: "error",
+        });
+      }).finally(() => {
+        setLoading(false)
+        setToken("");
+        captchaRef.current.resetCaptcha();
+      })
+    }
   }
 
   return (
@@ -105,8 +114,9 @@ function RegisterForm() {
               size="small"
               required={required.confirmPassword}
             />
-            <ReCAPTCHA
-              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+            <HCaptcha
+              sitekey={import.meta.env.VITE_CAPTCHA_SITE_KEY}
+              onVerify={setToken}
               ref={captchaRef}
             />
             <LoadingButton text="Cadastrar-se" loading={loading} className={styles.loginButton} />

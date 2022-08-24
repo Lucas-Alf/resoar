@@ -7,16 +7,19 @@ import Yup from '../../components/Validations'
 import { recover } from '../../services/auth'
 import { useSnackbar } from "notistack";
 import { Link, useNavigate } from "react-router-dom";
-import ReCAPTCHA from "react-google-recaptcha"
 import { useTheme } from '@mui/styles';
 import LoadingButton from "../../components/LoadingButton";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
+import { isEmpty } from "lodash";
 
 function RegisterForm() {
   const theme = useTheme();
-  const navigate = useNavigate();
   const captchaRef = useRef(null)
+  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(false)
+
   const initialValues = {
     email: ''
   }
@@ -29,30 +32,36 @@ function RegisterForm() {
   const required = makeRequired(schema);
 
   const onSubmit = (values) => {
-    setLoading(true)
-    const token = captchaRef.current.getValue();
-    recover({ ...values, token }).then(res => {
-      const { data } = res
-      if (data.success) {
-        enqueueSnackbar(`Email de recuperação enviado com sucesso`, {
-          variant: "success",
-        });
-        navigate("/");
-      } else {
-        console.error(data.message)
-        enqueueSnackbar(data.message, {
-          variant: "error",
-        });
-      }
-    }).catch(res => {
-      console.error(res)
-      enqueueSnackbar(`Ocorreu um erro ao enviar o email de recuperação`, {
+    if (isEmpty(token)) {
+      enqueueSnackbar(`Desafio hCaptcha é obrigatário`, {
         variant: "error",
       });
-    }).finally(() => {
-      captchaRef.current.reset();
-      setLoading(false)
-    })
+    } else {
+      setLoading(true)
+      recover({ ...values, token }).then(res => {
+        const { data } = res
+        if (data.success) {
+          enqueueSnackbar(`Email de recuperação enviado com sucesso`, {
+            variant: "success",
+          });
+          navigate("/");
+        } else {
+          console.error(data.message)
+          enqueueSnackbar(data.message, {
+            variant: "error",
+          });
+        }
+      }).catch(res => {
+        console.error(res)
+        enqueueSnackbar(`Ocorreu um erro ao enviar o email de recuperação`, {
+          variant: "error",
+        });
+      }).finally(() => {
+        setLoading(false)
+        setToken("");
+        captchaRef.current.resetCaptcha();
+      })
+    }
   }
 
   return (
@@ -77,8 +86,9 @@ function RegisterForm() {
               size="small"
               required={required.email}
             />
-            <ReCAPTCHA
-              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+            <HCaptcha
+              sitekey={import.meta.env.VITE_CAPTCHA_SITE_KEY}
+              onVerify={setToken}
               ref={captchaRef}
             />
             <LoadingButton text="Enviar" loading={loading} className={styles.loginButton} />
