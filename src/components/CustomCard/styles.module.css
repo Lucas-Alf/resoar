@@ -1,0 +1,17 @@
+.box {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.horizontalList {
+  display: flex;
+  flex-direction: row;
+  padding: 0
+}
+
+.seeMore {
+  max-width: 65px;
+  margin-left: auto;
+}

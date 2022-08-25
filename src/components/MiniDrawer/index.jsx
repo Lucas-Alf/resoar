@@ -69,17 +69,17 @@ export default function MiniDrawer({ open }) {
     {
       title: "Novas Publicações",
       icon: <NewspaperIcon />,
-      onClick: () => { navigate("/news"); }
+      onClick: () => { navigate("/app/news"); }
     },
     {
-      title: "Minhas Publicações",
+      title: "Meus Projetos",
       icon: <FolderIcon />,
-      onClick: () => { navigate("/my-publications"); }
+      onClick: () => { navigate("/app/projects"); }
     },
     {
-      title: "Publicações Salvas",
+      title: "Salvos",
       icon: <BookmarkIcon />,
-      onClick: () => { navigate("/saved"); }
+      onClick: () => { navigate("/app/bookmarks"); }
     }
   ]
 
