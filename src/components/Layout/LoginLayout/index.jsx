@@ -2,7 +2,7 @@ import { Card, CardContent, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styles from './styles.module.css'
-import logo from '../../../assets/img/resoar/colorfull/fullname.png'
+import logo from '../../../assets/img/resoar/colorfull/fullname.webp'
 import { isAuthenticated } from '../../../services/auth';
 
 function LoginLayout() {

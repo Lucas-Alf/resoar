@@ -10,8 +10,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import isEmpty from "lodash/isEmpty";
-import colorLogo from '../../assets/img/resoar/colorfull/fullname.png'
-import whiteLogo from '../../assets/img/resoar/white/fullname.png'
+import colorLogo from '../../assets/img/resoar/colorfull/fullname.webp'
+import whiteLogo from '../../assets/img/resoar/white/fullname.webp'
 import PropTypes from 'prop-types';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
