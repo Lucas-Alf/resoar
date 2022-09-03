@@ -93,6 +93,7 @@ export default function MiniDrawer({ open }) {
       title: "Sair",
       icon: <LogoutIcon />,
       onClick: () => {
+        window.setTheme('light')
         localStorage.clear()
         navigate("/");
       }

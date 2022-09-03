@@ -10,13 +10,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import isEmpty from "lodash/isEmpty";
-import colorLogo from '../../assets/img/resoar/colorfull/fullname.webp'
-import whiteLogo from '../../assets/img/resoar/white/fullname.webp'
+import logoImage from '../../assets/img/resoar/colorfull/fullname.webp'
 import PropTypes from 'prop-types';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { getShortUserName } from '../../services/auth'
 import { Typography } from "@mui/material";
+import styles from './styles.module.css'
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -95,11 +95,7 @@ export default function SearchAppBar({ toggleDrawer }) {
           <MenuIcon color="primary" />
         </IconButton>
         <Hidden mdDown>
-          <img src={
-            window.currentTheme == 'dark'
-              ? whiteLogo
-              : colorLogo
-          } width={140} />
+          <img src={logoImage} width={140} className={window.theme == 'dark' ? styles.whiteImage : null} />
         </Hidden>
         <Box sx={{ flexGrow: 0.8 }} />
         <Search>
@@ -121,7 +117,7 @@ export default function SearchAppBar({ toggleDrawer }) {
             aria-label="Dark Mode"
             onClick={() => window.toggleTheme()}
           >
-            {window.currentTheme === "dark"
+            {window.theme === "dark"
               ? <DarkModeIcon />
               : <LightModeIcon color="primary" />
             }

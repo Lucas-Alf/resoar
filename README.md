@@ -5,4 +5,5 @@
 ## Environment Variables
 | Name                              | Description                            |Required|
 |-----------------------------------|----------------------------------------|--------|
+| `VITE_API_URL`                    | API URL (ex: https://localhost:5000)   | Yes    |
 | `VITE_CAPTCHA_SITE_KEY`           | hCAPTCHA site key.                     | Yes    |

@@ -20,12 +20,18 @@ export default function App() {
   };
 
   useEffect(() => {
-    window.currentTheme = mode;
+    window.theme = mode;
     window.toggleTheme = () => {
       const newMode = mode === 'light' ? 'dark' : 'light'
       setMode(newMode);
       localStorage.setItem('theme', newMode)
-      window.currentTheme = newMode;
+      window.theme = newMode;
+    };
+
+    window.setTheme = (theme) => {
+      setMode(theme);
+      localStorage.setItem('theme', theme)
+      window.theme = theme;
     };
   }, [mode])
 

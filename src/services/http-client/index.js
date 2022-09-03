@@ -1,10 +1,7 @@
 import axios from "axios";
 
 const http = axios.create({
-  baseURL:
-    !import.meta.env.MODE || import.meta.env.MODE === "development"
-      ? "https://localhost:5000"
-      : "https://resoar-api.herokuapp.com",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 const httpGet = async (url, data, params = {}) => {
