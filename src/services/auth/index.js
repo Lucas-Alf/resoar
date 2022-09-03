@@ -47,7 +47,7 @@ const getUserId = () => get(getUser(), 'http://schemas.xmlsoap.org/ws/2005/05/id
 const getUserName = () => get(getUser(), 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name', '')
 const getShortUserName = () => {
   const namePieces = split(getUserName(), ' ')
-  if (namePieces.length == 0) {
+  if (namePieces.length == 1) {
     return namePieces[0]
   } else {
     return `${head(namePieces)} ${last(namePieces)}`

@@ -7,7 +7,7 @@ import Yup from '../../components/Validations'
 import { login } from '../../services/auth'
 import { useSnackbar } from "notistack";
 import { Link, useNavigate } from "react-router-dom";
-import { get, isEmpty } from "lodash";
+import { get } from "lodash";
 import { useTheme } from '@mui/styles';
 import LoadingButton from '../../components/LoadingButton'
 import HCaptcha from "@hcaptcha/react-hcaptcha";
@@ -19,6 +19,7 @@ function LoginForm() {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false)
   const [token, setToken] = useState(null);
+  const [captchaRequired, setCaptchaRequired] = useState(false);
 
   const initialValues = {
     email: '',
@@ -34,32 +35,32 @@ function LoginForm() {
   const required = makeRequired(schema);
 
   const onSubmit = (values) => {
-    if (isEmpty(token)) {
-      enqueueSnackbar(`Desafio hCaptcha é obrigatário`, {
-        variant: "error",
-      });
-    } else {
-      setLoading(true)
-      login({ ...values, token }).then(res => {
-        const { data } = res
-        if (data.success) {
-          localStorage.setItem('authToken', JSON.stringify(get(data, 'data')))
-          navigate("/app");
-        } else {
-          console.error(data.message)
-          enqueueSnackbar(data.message, {
-            variant: "error",
-          });
-        }
-      }).catch(err => {
-        console.error(err)
-        enqueueSnackbar(`Ocorreu um erro ao realizar o login`, {
+    setLoading(true)
+    login({ ...values, token }).then(res => {
+      const { data } = res
+      if (data.success) {
+        localStorage.setItem('authToken', JSON.stringify(get(data, 'data')))
+        navigate("/app");
+      } else {
+        console.error(data.message)
+        enqueueSnackbar(data.message, {
           variant: "error",
         });
-      }).finally(() => {
-        setLoading(false)
-      })
-    }
+        if (captchaRequired) {
+          captchaRef.current.resetCaptcha();
+        }
+        if (get(data, 'data.requireCaptcha')) {
+          setCaptchaRequired(true)
+        }
+      }
+    }).catch(err => {
+      console.error(err)
+      enqueueSnackbar(`Ocorreu um erro ao realizar o login`, {
+        variant: "error",
+      });
+    }).finally(() => {
+      setLoading(false)
+    })
   }
 
   return (
@@ -91,11 +92,16 @@ function LoginForm() {
               size="small"
               required={required.password}
             />
-            <HCaptcha
-              sitekey={import.meta.env.VITE_CAPTCHA_SITE_KEY}
-              onVerify={setToken}
-              ref={captchaRef}
-            />
+            {
+              captchaRequired &&
+              (
+                <HCaptcha
+                  sitekey={import.meta.env.VITE_CAPTCHA_SITE_KEY}
+                  onVerify={setToken}
+                  ref={captchaRef}
+                />
+              )
+            }
             <LoadingButton
               text="Entrar"
               loading={loading}

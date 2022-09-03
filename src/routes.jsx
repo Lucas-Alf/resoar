@@ -6,6 +6,7 @@ import LoginForm from "./pages/login/LoginForm";
 import RegisterForm from "./pages/login/RegisterForm";
 import ResetPassword from "./pages/login/ResetPasswordForm";
 import RecoverForm from "./pages/login/RecoverForm";
+import NotFound from "./pages/not-found";
 
 const routes = [
   {
@@ -19,6 +20,7 @@ const routes = [
   },
   {
     element: <AppLayout />, children: [
+      { path: "*", element: <NotFound /> },
       { path: "/app", element: <Overview /> },
     ]
   }
