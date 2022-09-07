@@ -76,7 +76,7 @@ export default function SearchAppBar({ toggleDrawer }) {
       if (!isEmpty(evt.target.value)) {
         navigate(`/search?query=${evt.target.value}`);
       } else {
-        navigate("/home");
+        navigate("/app");
       }
     }
   };
@@ -95,7 +95,12 @@ export default function SearchAppBar({ toggleDrawer }) {
           <MenuIcon color="primary" />
         </IconButton>
         <Hidden mdDown>
-          <img src={logoImage} width={140} className={window.theme == 'dark' ? styles.whiteImage : null} />
+          <img
+            src={logoImage}
+            alt="Logo image"
+            width={140}
+            className={window.theme == 'dark' ? styles.whiteImage : null}
+          />
         </Hidden>
         <Box sx={{ flexGrow: 0.8 }} />
         <Search>

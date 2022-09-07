@@ -7,3 +7,4 @@
 |-----------------------------------|----------------------------------------|--------|
 | `VITE_API_URL`                    | API URL (ex: https://localhost:5000)   | Yes    |
 | `VITE_CAPTCHA_SITE_KEY`           | hCAPTCHA site key.                     | Yes    |
+| `VITE_STORAGE_URL`                | Digital Ocean / AWS S3 Storage URL     | Yes    |

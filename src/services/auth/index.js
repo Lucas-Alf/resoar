@@ -43,6 +43,15 @@ const getUser = () => {
   return jwt_decode(get(authToken, 'token'))
 }
 
+const getToken = () => {
+  const localData = localStorage.getItem("authToken");
+  if (!localData || isEmpty(localData))
+    return null;
+
+  const authToken = JSON.parse(localData)
+  return get(authToken, 'token')
+}
+
 const getUserId = () => get(getUser(), 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier', '')
 const getUserName = () => get(getUser(), 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name', '')
 const getShortUserName = () => {
@@ -60,6 +69,7 @@ export {
   recover,
   resetPassword,
   isAuthenticated,
+  getToken,
   getUser,
   getUserId,
   getUserName,

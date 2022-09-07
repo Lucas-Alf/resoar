@@ -12,6 +12,10 @@
 }
 
 .seeMore {
-  max-width: 65px;
-  margin-left: auto;
+  width: 65px;
+}
+
+.link {
+  text-decoration: none !important;
+  color: inherit
 }

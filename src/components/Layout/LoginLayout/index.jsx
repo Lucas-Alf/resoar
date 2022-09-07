@@ -46,7 +46,7 @@ function LoginLayout() {
               >
                 <Card sx={{ width: 335 }}>
                   <CardContent>
-                    <img src={logo} className={styles.logoImage} />
+                    <img src={logo} className={styles.logoImage} alt="Logo image" />
                     <Outlet />
                     <span className={styles.copyrightText} >Copyright © RESOAR {new Date().getFullYear()}</span>
                   </CardContent>
