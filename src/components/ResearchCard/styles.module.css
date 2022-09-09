@@ -1,18 +1,19 @@
 .image {
-  object-fit: contain !important;
-}
-
-.cardContent {
-  padding: 8px !important
-}
-
-.link {
-  color: inherit !important;
-  text-decoration: none !important;
+  object-position: top;
+  /* filter: blur(1px); */
 }
 
 .title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.iconToRight {
+  margin-left: auto !important;
+}
+
+.card {
+  -webkit-box-shadow: 4px 4px 22px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 22px 5px rgba(0, 0, 0, 0.1);
 }

@@ -1,0 +1,19 @@
+.wrapIcon {
+  align-items: center;
+  display: flex;
+}
+
+.iconMargin {
+  margin-right: 5px;
+}
+
+.titleDiv {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.counter {
+  margin-left: 5px;
+  align-items: center;
+  display: flex;
+}

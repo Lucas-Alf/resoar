@@ -1,23 +1,12 @@
-const primary = "#fff";
-
 const theme = {
   palette: {
     mode: "dark",
     primary: {
-      main: primary,
+      main: "#fff",
     },
     secondary: {
       main: "#fff",
-    },
-    typography: {
-      allVariants: {
-        color: primary,
-      },
-    },
-    background: {
-      default: "#212129",
-      paper: "#212129",
-    },
+    }
   },
 };
 

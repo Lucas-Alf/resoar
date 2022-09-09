@@ -1,31 +1,35 @@
 import { Container, Stack, Typography } from '@mui/material';
 import React, { } from 'react';
-import CustomCardContainer from '../../components/CustomCardContainer';
 import styles from './styles.module.css'
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import OverviewRow from '../../components/OverviewRow';
+import { getResearch } from '../../services/research';
+import FolderIcon from '@mui/icons-material/FolderOutlined';
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import HistoryIcon from '@mui/icons-material/History';
-import MyPublications from './MyPublications';
 
 function Overview() {
   return (
     <Container className={styles.container} maxWidth="xl">
-      <Typography variant='h4'> Visão Geral</Typography>
-      <Stack spacing={5} style={{ marginTop: 25 }}>
-        <MyPublications />
-        <CustomCardContainer
-          title='Salvos'
-          titleIcon={BookmarkIcon}
-          screenUrl="/bookmarks"
-        >
-          <div>test</div>
-        </CustomCardContainer>
-        <CustomCardContainer
-          title='Histórico'
-          titleIcon={HistoryIcon}
-          screenUrl="/bookmarks"
-        >
-          <div>test</div>
-        </CustomCardContainer>
+      <Typography variant='h4' color="primary"> Visão Geral</Typography>
+      <Stack spacing={2}>
+        <OverviewRow
+          title="Minhas Publicações"
+          icon={FolderIcon}
+          getMethod={getResearch}
+          url="/app/projects"
+        />
+        <OverviewRow
+          title="Salvos"
+          icon={BookmarkBorderOutlinedIcon}
+          getMethod={getResearch}
+          url="/app/bookmarks"
+        />
+        <OverviewRow
+          title="Histórico"
+          icon={HistoryIcon}
+          getMethod={getResearch}
+          url="/app/history"
+        />
       </Stack>
     </Container >
   );
