@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { IconButton, InputAdornment, Stack } from "@mui/material";
 import { TextField, makeValidate, makeRequired } from "mui-rff";
 import React, { useRef, useState } from "react";
 import { Form } from "react-final-form";
@@ -11,6 +11,7 @@ import { useTheme } from '@mui/styles';
 import LoadingButton from "../../components/LoadingButton";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { isEmpty } from "lodash";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -20,6 +21,13 @@ function RegisterForm() {
   const captchaRef = useRef(null)
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+  const handleMouseDownConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+
   const initialValues = {
     name: '',
     email: '',
@@ -103,16 +111,42 @@ function RegisterForm() {
             <TextField
               label="Senha"
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               size="small"
               required={required.password}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
             />
             <TextField
               label="Repita a senha"
               name="confirmPassword"
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               size="small"
               required={required.confirmPassword}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowConfirmPassword}
+                      onMouseDown={handleMouseDownConfirmPassword}
+                    >
+                      {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
             />
             <HCaptcha
               sitekey={import.meta.env.VITE_CAPTCHA_SITE_KEY}

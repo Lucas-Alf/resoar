@@ -24,7 +24,7 @@ function OverviewRow(props) {
       setRecords(request.data)
       setLoading(false)
     })
-  }, [])
+  }, [getMethod])
 
   const totalRecords = !loading
     ? `(${get(records, 'totalRecords', '')})`

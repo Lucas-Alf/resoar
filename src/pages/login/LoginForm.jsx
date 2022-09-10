@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { IconButton, InputAdornment, Stack } from "@mui/material";
 import { TextField, makeValidate, makeRequired } from "mui-rff";
 import React, { useRef, useState } from "react";
 import { Form } from "react-final-form";
@@ -11,6 +11,7 @@ import { get } from "lodash";
 import { useTheme } from '@mui/styles';
 import LoadingButton from '../../components/LoadingButton'
 import HCaptcha from "@hcaptcha/react-hcaptcha";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 function LoginForm() {
   const theme = useTheme();
@@ -20,6 +21,9 @@ function LoginForm() {
   const [loading, setLoading] = useState(false)
   const [token, setToken] = useState(null);
   const [captchaRequired, setCaptchaRequired] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   const initialValues = {
     email: '',
@@ -88,9 +92,22 @@ function LoginForm() {
             <TextField
               label="Senha"
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               size="small"
               required={required.password}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
             />
             {
               captchaRequired &&
