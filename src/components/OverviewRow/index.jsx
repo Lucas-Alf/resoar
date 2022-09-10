@@ -5,8 +5,10 @@ import styles from './styles.module.css'
 import PropTypes from 'prop-types';
 import ResearchCard from '../ResearchCard';
 import ResearchSeeMoreCard from '../ResearchSeeMoreCard';
+import { useSnackbar } from "notistack";
 
 function OverviewRow(props) {
+  const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false)
   const [records, setRecords] = useState([])
 
@@ -20,11 +22,20 @@ function OverviewRow(props) {
 
   useEffect(() => {
     setLoading(true)
-    getMethod({ pageSize: 3 }).then((request) => {
-      setRecords(request.data)
-      setLoading(false)
-    })
-  }, [getMethod])
+    getMethod({ pageSize: 3 })
+      .then((request) => {
+        setRecords(request.data)
+      })
+      .catch((err) => {
+        console.error(err)
+        enqueueSnackbar(`Ocorreu um erro ao carregar os dados`, {
+          variant: "error",
+        });
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [getMethod, enqueueSnackbar])
 
   const totalRecords = !loading
     ? `(${get(records, 'totalRecords', '')})`

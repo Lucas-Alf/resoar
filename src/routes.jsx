@@ -1,7 +1,8 @@
 import React from "react";
 import LoginLayout from "./components/Layout/LoginLayout"
 import AppLayout from "./components/Layout/AppLayout"
-import Overview from "./pages/overview/Overview"
+import Overview from "./pages/overview/"
+import Projects from "./pages/projects/"
 import LoginForm from "./pages/login/LoginForm";
 import RegisterForm from "./pages/login/RegisterForm";
 import ResetPassword from "./pages/login/ResetPasswordForm";
@@ -22,6 +23,7 @@ const routes = [
     element: <AppLayout />, children: [
       { path: "*", element: <NotFound /> },
       { path: "/app", element: <Overview /> },
+      { path: "/app/projects", element: <Projects /> },
     ]
   }
 ];

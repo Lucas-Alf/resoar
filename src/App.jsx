@@ -9,10 +9,21 @@ import { SnackbarProvider } from "notistack";
 import Slide from "@mui/material/Slide";
 import IconButton from "@mui/material/IconButton";
 import { Close as CloseIcon } from "@mui/icons-material";
+import { ptBR } from '@mui/x-data-grid';
+import { ptBR as pickersPtBR } from '@mui/x-date-pickers';
+import { ptBR as corePtBR } from '@mui/material/locale';
+
 
 export default function App() {
   const [mode, setMode] = useState(localStorage.getItem('theme') || 'light')
-  const theme = createTheme(mode === 'light' ? lightTheme : darkTheme)
+  const theme = createTheme(
+    mode === 'light'
+      ? lightTheme
+      : darkTheme,
+    ptBR,
+    pickersPtBR,
+    corePtBR
+  )
 
   const snackbarRef = createRef();
   const onClickDismiss = (key) => () => {

@@ -1,0 +1,10 @@
+.container {
+  margin-top: 25px;
+}
+
+.dataGridBox {
+  margin-top: 25px;
+  height: 600px;
+  min-width: 600px;
+  width: '100%'
+}

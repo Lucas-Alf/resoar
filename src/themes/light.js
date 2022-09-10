@@ -12,6 +12,6 @@ const theme = {
       dark: "#717597",
     }
   }
-};
+}
 
 export default theme;
