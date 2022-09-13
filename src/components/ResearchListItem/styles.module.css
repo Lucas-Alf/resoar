@@ -52,10 +52,10 @@
 }
 
 .abstract {
-  height: 100px;
+  max-height: 100px;
+  text-align: justify;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: justify;
 }
 
 .authors {
@@ -63,15 +63,14 @@
   margin-right: 15px;
 }
 
-.authorNames {
-  display: flex;
-  align-items: center;
+.textNames {
+  margin-top: 8px !important;
   margin-left: 5px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .grid {
   margin-top: 15px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }

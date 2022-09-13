@@ -43,7 +43,7 @@ function ResearchListItem(props) {
   }
 
   return (
-    <Card variant="outlined" className={styles.card} sx={{ minWidth: 650 }}>
+    <Card variant="outlined" className={styles.card} sx={{ minWidth: 750 }}>
       <CardContent>
         <div className={styles.researchType}>
           <Typography className={styles.researchTypeText} variant="body2" color="text.secondary">
@@ -91,7 +91,7 @@ function ResearchListItem(props) {
                 <span>Escrito por:</span>
                 <div className={styles.authors}>
                   {renderAvatar(authors)}
-                  <Typography variant="body2" color="text.secondary" className={styles.authorNames}>
+                  <Typography variant="body2" color="text.secondary" className={styles.textNames}>
                     {join(map(authors, (x) => x.name), ', ')}
                   </Typography>
                 </div>
@@ -102,7 +102,7 @@ function ResearchListItem(props) {
                     <span>Orientado por:</span>
                     <div className={styles.authors}>
                       {renderAvatar(advisors)}
-                      <Typography variant="body2" color="text.secondary" className={styles.authorNames}>
+                      <Typography variant="body2" color="text.secondary" className={styles.textNames}>
                         {join(map(advisors, (x) => x.name), ', ')}
                       </Typography>
                     </div>
