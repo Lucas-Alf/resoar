@@ -55,16 +55,11 @@ export default function ResearchCard(props) {
               </IconButton>
             </>
             :
-            <>
-              <IconButton disabled className={styles.iconToRight}>
-                <ShareOutlinedIcon color="text.secondary" />
-              </IconButton>
-              <IconButton>
-                <Tooltip title="Privado">
-                  <LockOutlinedIcon />
-                </Tooltip>
-              </IconButton>
-            </>
+            <IconButton className={styles.iconToRight}>
+              <Tooltip title="Privado">
+                <LockOutlinedIcon />
+              </Tooltip>
+            </IconButton>
         }
       </CardActions>
     </Card>

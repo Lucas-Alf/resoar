@@ -18,7 +18,8 @@ function ResearchListItem(props) {
       visibility,
       abstract,
       authors,
-      advisors
+      advisors,
+      year
     }
   } = props
 
@@ -87,6 +88,9 @@ function ResearchListItem(props) {
               {abstract}
             </Typography>
             <Grid container className={styles.grid}>
+              <Grid item xs={12}>
+                <span>Publicado em: {year}</span>
+              </Grid>
               <Grid item xs={5}>
                 <span>Escrito por:</span>
                 <div className={styles.authors}>
