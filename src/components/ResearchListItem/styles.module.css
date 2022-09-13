@@ -1,0 +1,77 @@
+.card {
+  -webkit-box-shadow: 4px 4px 22px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 22px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.box {
+  display: flex;
+  margin-top: 10px;
+}
+
+.researchType {
+  display: flex;
+}
+
+.researchTypeText {
+  font-size: 14px !important;
+  align-self: center;
+}
+
+.actionButtons {
+  margin-left: auto;
+}
+
+.button {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  padding-right: 0px !important;
+}
+
+.title {
+  margin-top: 10px !important;
+  font-weight: bold !important;
+  text-align: justify;
+}
+
+.iconToRight {
+  margin-left: auto !important;
+}
+
+.image {
+  width: 150px;
+  max-width: 150px;
+  border: solid 1px #D9D9D9;
+  border-radius: 5px;
+}
+
+.contentBox {
+  margin-left: 15px;
+  flex-direction: column;
+}
+
+.abstract {
+  height: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: justify;
+}
+
+.authors {
+  display: flex;
+  margin-right: 15px;
+}
+
+.authorNames {
+  display: flex;
+  align-items: center;
+  margin-left: 5px !important;
+}
+
+.grid {
+  margin-top: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
