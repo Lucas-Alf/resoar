@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import ResearchCard from '../ResearchCard';
 import ResearchSeeMoreCard from '../ResearchSeeMoreCard';
 import { useSnackbar } from "notistack";
+import { getUserId } from '../../services/auth'
 
 function OverviewRow(props) {
   const { enqueueSnackbar } = useSnackbar();
@@ -22,7 +23,7 @@ function OverviewRow(props) {
 
   useEffect(() => {
     setLoading(true)
-    getMethod({ pageSize: 3 })
+    getMethod({ pageSize: 3, userId: getUserId() })
       .then((request) => {
         setRecords(request.data)
       })

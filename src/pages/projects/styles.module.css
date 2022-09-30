@@ -1,3 +1,11 @@
 .container {
   margin-top: 25px;
 }
+
+.listMargin {
+  margin-top: 15px;
+}
+
+.searchField {
+  width: 100%;
+}

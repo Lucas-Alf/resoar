@@ -24,12 +24,13 @@ function PaginatedList(props) {
 
   const {
     getMethod,
+    queryParams,
     component: Component,
     ...otherProps
   } = props
 
   useEffect(() => {
-    getMethod({ page, pageSize })
+    getMethod({ page, pageSize, ...queryParams })
       .then((request) => {
         setRecords(get(request.data, 'records', []))
         setTotalRecords(get(request.data, 'totalRecords', 0))
@@ -43,7 +44,7 @@ function PaginatedList(props) {
       .finally(() => {
         setLoading(false)
       })
-  }, [enqueueSnackbar, getMethod, page, pageSize])
+  }, [enqueueSnackbar, getMethod, page, pageSize, queryParams])
 
   return (
     <div {...otherProps}>
@@ -74,7 +75,13 @@ function PaginatedList(props) {
 
 PaginatedList.propTypes = {
   getMethod: PropTypes.func.isRequired,
-  component: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired
+  component: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
+  queryParams: PropTypes.object
 }
+
+PaginatedList.defaultProps = {
+  queryParams: {}
+}
+
 
 export default PaginatedList;
