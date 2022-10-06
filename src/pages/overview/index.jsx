@@ -16,7 +16,7 @@ function Overview() {
           title="Minhas Publicações"
           icon={FolderIcon}
           getMethod={getResearch}
-          url="/app/projects"
+          url="/app/research"
         />
         <OverviewRow
           title="Salvos"

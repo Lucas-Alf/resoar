@@ -2,7 +2,8 @@ import React from "react";
 import LoginLayout from "./components/Layout/LoginLayout"
 import AppLayout from "./components/Layout/AppLayout"
 import Overview from "./pages/overview/"
-import Projects from "./pages/projects/"
+import Research from "./pages/research/"
+import AddResearch from "./pages/research/Add"
 import LoginForm from "./pages/login/LoginForm";
 import RegisterForm from "./pages/login/RegisterForm";
 import ResetPassword from "./pages/login/ResetPasswordForm";
@@ -23,7 +24,8 @@ const routes = [
     element: <AppLayout />, children: [
       { path: "*", element: <NotFound /> },
       { path: "/app", element: <Overview /> },
-      { path: "/app/projects", element: <Projects /> },
+      { path: "/app/research", element: <Research /> },
+      { path: "/app/research/add", element: <AddResearch /> },
     ]
   }
 ];

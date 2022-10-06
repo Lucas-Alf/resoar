@@ -8,7 +8,7 @@ import ResearchListItem from '../../components/ResearchListItem';
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from "react-router-dom";
 
-function Projects() {
+function Research() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("")
   const [titleBuffer, setTitleBuffer] = useState("")
@@ -43,7 +43,7 @@ function Projects() {
               color='inherit'
               variant="outlined"
               startIcon={<AddIcon />}
-              onClick={() => { navigate("/projects/add") }}
+              onClick={() => { navigate("/app/research/add") }}
             >
               Incluir
             </Button>
@@ -56,8 +56,8 @@ function Projects() {
         component={ResearchListItem}
         queryParams={queryParams}
       />
-    </Container >
+    </Container>
   );
 }
 
-export default Projects;
+export default Research;

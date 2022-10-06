@@ -69,7 +69,7 @@ export default function MiniDrawer({ open }) {
     {
       title: "Minhas Publicações",
       icon: <FolderIcon />,
-      onClick: () => { navigate("/app/projects"); }
+      onClick: () => { navigate("/app/research"); }
     },
     {
       title: "Novas Publicações",
