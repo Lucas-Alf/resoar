@@ -5,9 +5,9 @@ import styles from './styles.module.css';
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { getResearchTypeDescription } from '../../services/research';
+import { researchType } from '../../pages/research/utils';
 import { Box } from '@mui/system';
-import { head, isEmpty, map, join, size } from 'lodash';
+import { head, isEmpty, map, join, size, filter, get } from 'lodash';
 
 function ResearchListItem(props) {
   const {
@@ -48,7 +48,7 @@ function ResearchListItem(props) {
       <CardContent>
         <div className={styles.researchType}>
           <Typography className={styles.researchTypeText} variant="body2" color="text.secondary">
-            {getResearchTypeDescription(type)}
+            {get(head(filter(researchType, ['value', type])), 'label', '')}
           </Typography>
           <div className={styles.actionButtons}>
             {

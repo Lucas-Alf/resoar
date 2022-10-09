@@ -1,4 +1,4 @@
-import { get, isEmpty, split, last, head } from "lodash";
+import { get, isEmpty, split, last, head, toNumber } from "lodash";
 import { httpPost } from "../http-client";
 import jwt_decode from "jwt-decode";
 
@@ -52,8 +52,14 @@ const getToken = () => {
   return get(authToken, 'token')
 }
 
-const getUserId = () => get(getUser(), 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier', '')
+const getUserId = () => toNumber(get(getUser(), 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier', ''))
 const getUserName = () => get(getUser(), 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name', '')
+
+const getUserImagePath = () => {
+  const userData = JSON.parse(get(getUser(), 'http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata', '{}'))
+  return get(userData, 'imagePath', '')
+}
+
 const getShortUserName = () => {
   const namePieces = split(getUserName(), ' ')
   if (namePieces.length == 1) {
@@ -73,5 +79,6 @@ export {
   getUser,
   getUserId,
   getUserName,
-  getShortUserName
+  getShortUserName,
+  getUserImagePath
 };
