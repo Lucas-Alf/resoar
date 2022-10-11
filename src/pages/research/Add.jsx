@@ -13,31 +13,13 @@ import LoadingButton from '../../components/LoadingButton';
 import { languages, visibility, researchType } from './utils'
 import { getInstitution } from '../../services/institution'
 import { getUser } from '../../services/user'
-import { getUserId, getUserName, getUserImagePath } from '../../services/auth'
-import { get, filter } from 'lodash';
+import { get } from 'lodash';
+import AutoCompleteServerSide from '../../components/AutocompleteServerSide';
 
 function Add() {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false)
-
-  const [institutionList, setInstitutionList] = useState([])
-  const [institutionListLoading, setInstitutionListLoading] = useState(false)
-  const [institutionName, setInstitutionName] = useState("")
-  const [institutionNameBuffer, setInstitutionNameBuffer] = useState("")
-  const [institutionQueryParams, setInstitutionQueryParams] = useState({})
-
-  const [authorList, setAuthorList] = useState([])
-  const [authorListLoading, setAuthorListLoading] = useState(false)
-  const [authorName, setAuthorName] = useState("")
-  const [authorNameBuffer, setAuthorNameBuffer] = useState("")
-  const [authorQueryParams, setAuthorQueryParams] = useState({})
-
-  const [advisorList, setAdvisorList] = useState([])
-  const [advisorListLoading, setAdvisorListLoading] = useState(false)
-  const [advisorName, setAdvisorName] = useState("")
-  const [advisorNameBuffer, setAdvisorNameBuffer] = useState("")
-  const [advisorQueryParams, setAdvisorQueryParams] = useState({})
 
   const initialValues = {
     title: '',
@@ -86,88 +68,6 @@ function Add() {
       setLoading(false)
     })
   }
-
-  // Carregamento e Filtragem de Autocomplete de Instituições
-  useEffect(() => {
-    setInstitutionListLoading(true)
-    getInstitution(institutionQueryParams)
-      .then((request) => {
-        setInstitutionList(get(request.data, 'records', []))
-      })
-      .catch((err) => {
-        console.error(err)
-        enqueueSnackbar(`Ocorreu um erro ao carregar os dados`, {
-          variant: "error",
-        });
-      })
-      .finally(() => {
-        setInstitutionListLoading(false)
-      })
-  }, [enqueueSnackbar, institutionQueryParams])
-
-  useEffect(() => {
-    const timeOutId = setTimeout(() => setInstitutionNameBuffer(institutionName), 500);
-    return () => clearTimeout(timeOutId);
-  }, [institutionName]);
-
-  useEffect(() => {
-    setInstitutionQueryParams(prevParams => { return { ...prevParams, name: institutionNameBuffer } })
-  }, [institutionNameBuffer])
-
-
-  // Carregamento e Filtragem de Autocomplete de Autores
-  useEffect(() => {
-    setAuthorListLoading(true)
-    getUser(authorQueryParams)
-      .then((request) => {
-        setAuthorList(get(request.data, 'records', []))
-      })
-      .catch((err) => {
-        console.error(err)
-        enqueueSnackbar(`Ocorreu um erro ao carregar os dados`, {
-          variant: "error",
-        });
-      })
-      .finally(() => {
-        setAuthorListLoading(false)
-      })
-  }, [enqueueSnackbar, authorQueryParams])
-
-  useEffect(() => {
-    const timeOutId = setTimeout(() => setAuthorNameBuffer(authorName), 500);
-    return () => clearTimeout(timeOutId);
-  }, [authorName]);
-
-  useEffect(() => {
-    setAuthorQueryParams(prevParams => { return { ...prevParams, name: authorNameBuffer } })
-  }, [authorNameBuffer])
-
-  // Carregamento e Filtragem de Autocomplete de Orientadores
-  useEffect(() => {
-    setAdvisorListLoading(true)
-    getUser(advisorQueryParams)
-      .then((request) => {
-        setAdvisorList(get(request.data, 'records', []))
-      })
-      .catch((err) => {
-        console.error(err)
-        enqueueSnackbar(`Ocorreu um erro ao carregar os dados`, {
-          variant: "error",
-        });
-      })
-      .finally(() => {
-        setAdvisorListLoading(false)
-      })
-  }, [enqueueSnackbar, advisorQueryParams])
-
-  useEffect(() => {
-    const timeOutId = setTimeout(() => setAdvisorNameBuffer(advisorName), 500);
-    return () => clearTimeout(timeOutId);
-  }, [advisorName]);
-
-  useEffect(() => {
-    setAdvisorQueryParams(prevParams => { return { ...prevParams, name: advisorNameBuffer } })
-  }, [advisorNameBuffer])
 
   return (
     <Container className={styles.container} maxWidth="xl">
@@ -235,17 +135,14 @@ function Add() {
                 getOptionLabel={option => option.label}
                 required={required.language}
               />
-              <Autocomplete
+              <AutoCompleteServerSide
                 label="Instituição"
                 name="institutionId"
                 size={"small"}
-                options={institutionList}
-                loading={institutionListLoading}
-                disableClearable
+                searchField={"name"}
+                fetchFunction={getInstitution}
                 getOptionValue={option => option.id}
                 getOptionLabel={option => option.name}
-                filterOptions={(x) => x}
-                onInputChange={(event, value) => { setInstitutionName(value) }}
                 required={required.institutionId}
                 renderOption={(props, option) => (
                   <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
@@ -254,19 +151,17 @@ function Add() {
                   </Box>
                 )}
               />
-              <Autocomplete
+              <AutoCompleteServerSide
+                multiple
                 label="Autores"
                 name="authorIds"
-                helperText='Pesquise pelo nome do autor...'
                 size={"small"}
-                multiple
-                options={authorList}
-                loading={authorListLoading}
-                disableClearable
+                helperText='Pesquise pelo nome do autor...'
+                searchField={"name"}
+                fetchFunction={getUser}
                 getOptionValue={option => option.id}
                 getOptionLabel={option => option.name}
-                filterOptions={(x) => x}
-                onInputChange={(event, value) => { setAuthorName(value) }}
+                disableClearable
                 required={required.authorIds}
                 renderOption={(props, option) => (
                   <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
@@ -285,7 +180,7 @@ function Add() {
                   ))
                 }
               />
-              <Autocomplete
+              {/* <Autocomplete
                 label="Orientadores"
                 name="advisorIds"
                 helperText='Pesquise pelo nome do orientador...'
@@ -315,13 +210,13 @@ function Add() {
                     />
                   ))
                 }
-              />
-              <TextField
+              /> */}
+              {/* <TextField
                 label="Arquivo"
                 name="file"
                 size="small"
               // required={required.file}
-              />
+              /> */}
               <LoadingButton
                 text="Salvar"
                 loading={loading}

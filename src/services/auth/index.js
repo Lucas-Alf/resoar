@@ -54,11 +54,7 @@ const getToken = () => {
 
 const getUserId = () => toNumber(get(getUser(), 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier', ''))
 const getUserName = () => get(getUser(), 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name', '')
-
-const getUserImagePath = () => {
-  const userData = JSON.parse(get(getUser(), 'http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata', '{}'))
-  return get(userData, 'imagePath', '')
-}
+const getUserImagePath = () => get(getUser(), 'imagePath', '')
 
 const getShortUserName = () => {
   const namePieces = split(getUserName(), ' ')
