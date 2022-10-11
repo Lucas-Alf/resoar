@@ -141,8 +141,8 @@ function Add() {
                 size={"small"}
                 searchField={"name"}
                 fetchFunction={getInstitution}
-                getOptionValue={option => option.id}
-                getOptionLabel={option => option.name}
+                getOptionValue={option => get(option, 'id')}
+                getOptionLabel={option => get(option, 'name')}
                 required={required.institutionId}
                 renderOption={(props, option) => (
                   <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
@@ -157,11 +157,10 @@ function Add() {
                 name="authorIds"
                 size={"small"}
                 helperText='Pesquise pelo nome do autor...'
-                searchField={"name"}
                 fetchFunction={getUser}
-                getOptionValue={option => option.id}
-                getOptionLabel={option => option.name}
-                disableClearable
+                searchField={"name"}
+                getOptionValue={option => get(option, 'id')}
+                getOptionLabel={option => get(option, 'name')}
                 required={required.authorIds}
                 renderOption={(props, option) => (
                   <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
@@ -180,19 +179,16 @@ function Add() {
                   ))
                 }
               />
-              {/* <Autocomplete
+              <AutoCompleteServerSide
+                multiple
                 label="Orientadores"
                 name="advisorIds"
-                helperText='Pesquise pelo nome do orientador...'
                 size={"small"}
-                multiple
-                options={advisorList}
-                loading={advisorListLoading}
-                disableClearable
-                getOptionValue={option => option.id}
-                getOptionLabel={option => option.name}
-                filterOptions={(x) => x}
-                onInputChange={(event, value) => { setAdvisorName(value) }}
+                helperText='Pesquise pelo nome do orientador...'
+                fetchFunction={getUser}
+                searchField={"name"}
+                getOptionValue={option => get(option, 'id')}
+                getOptionLabel={option => get(option, 'name')}
                 required={required.advisorIds}
                 renderOption={(props, option) => (
                   <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
@@ -210,13 +206,13 @@ function Add() {
                     />
                   ))
                 }
-              /> */}
-              {/* <TextField
+              />
+              <TextField
                 label="Arquivo"
                 name="file"
                 size="small"
               // required={required.file}
-              /> */}
+              />
               <LoadingButton
                 text="Salvar"
                 loading={loading}

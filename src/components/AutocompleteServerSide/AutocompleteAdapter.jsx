@@ -15,8 +15,15 @@ function AutocompleteAdapter(props) {
     submitError,
     fetchFunction,
     getOptionValue,
+    onChange: onChangeCallback,
+    input: {
+      multiple,
+      onChange,
+      name
+    },
     ...rest
   } = props
+
 
   const [options, setOptions] = useState([])
   const [loading, setLoading] = useState(false)
@@ -52,16 +59,39 @@ function AutocompleteAdapter(props) {
     setQueryParams(prevParams => { return { ...prevParams, [searchField]: searchValueBuffer } })
   }, [searchValueBuffer, searchField])
 
+  const getValue = (values) => {
+    if (!getOptionValue) {
+      return values;
+    }
+
+    if (multiple) {
+      return values ? values.map(getOptionValue) : null
+    } else {
+      return values ? getOptionValue(values) : null
+    }
+  }
+
+  const onChangeFunc = (event, value, reason, details,) => {
+    const gotValue = getValue(value);
+    onChange(gotValue);
+
+    if (onChangeCallback) {
+      onChangeCallback(event, gotValue, reason, details);
+    }
+  };
+
   return (
     <Autocomplete
+      multiple={multiple}
+      onChange={onChangeFunc}
       loading={loading}
       options={options}
-      multiple={get(rest, 'input.multiple', false)}
       filterOptions={(x) => x}
       onInputChange={(event, value) => { setSearchValue(value) }}
       isOptionEqualToValue={(option, value) => getOptionValue(option) === getOptionValue(value)}
       renderInput={(params) => (
         <TextField
+          name={name}
           label={label}
           helperText={isError ? error || submitError : helperText}
           required={required}
@@ -93,6 +123,7 @@ AutocompleteAdapter.propTypes = {
   required: PropTypes.any.isRequired,
   fetchFunction: PropTypes.func.isRequired,
   getOptionValue: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   searchField: PropTypes.string.isRequired
 }
 
