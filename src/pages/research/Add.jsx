@@ -30,8 +30,10 @@ function Add() {
     visibility: undefined,
     language: undefined,
     institutionId: undefined,
-    authorIds: [],
-    advisorIds: [],
+    authorIds: undefined,
+    keyWordIds: undefined,
+    knowledgeAreaIds: undefined,
+    advisorIds: undefined,
     file: undefined
   }
 
@@ -265,15 +267,6 @@ function Add() {
                   getOptionValue={option => get(option, 'id')}
                   getOptionLabel={option => get(option, 'description')}
                   required={required.keyWordIds}
-                  renderTags={(tagValue, getTagProps) =>
-                    tagValue.map((option, index) => (
-                      <Chip
-                        key={option.id}
-                        label={option.description}
-                        {...getTagProps({ index })}
-                      />
-                    ))
-                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -290,15 +283,6 @@ function Add() {
                   getOptionValue={option => get(option, 'id')}
                   getOptionLabel={option => get(option, 'description')}
                   required={required.knowledgeAreaIds}
-                  renderTags={(tagValue, getTagProps) =>
-                    tagValue.map((option, index) => (
-                      <Chip
-                        key={option.id}
-                        label={option.description}
-                        {...getTagProps({ index })}
-                      />
-                    ))
-                  }
                 />
               </Grid>
               <Grid item xs={12}>

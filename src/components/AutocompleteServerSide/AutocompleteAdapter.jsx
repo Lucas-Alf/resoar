@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Autocomplete, CircularProgress, TextField } from '@mui/material';
-import { get, isEmpty, isFunction, filter, last } from 'lodash';
+import { get, isEmpty, isFunction, filter, last, map } from 'lodash';
 import { useSnackbar } from 'notistack';
 
 function AutocompleteAdapter(props) {
@@ -118,7 +118,7 @@ function AutocompleteAdapter(props) {
     }
 
     if (multiple) {
-      return values ? values.map(getOptionValue) : null
+      return values ? map(values, getOptionValue) : null
     } else {
       return values ? getOptionValue(values) : null
     }
