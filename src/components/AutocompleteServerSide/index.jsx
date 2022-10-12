@@ -13,6 +13,7 @@ function AutoCompleteServerSide(props) {
     label,
     required,
     multiple,
+    creatable,
     className,
     helperText,
     renderTags,
@@ -20,6 +21,7 @@ function AutoCompleteServerSide(props) {
     searchField,
     renderOption,
     fetchFunction,
+    createFunction,
     getOptionLabel,
     getOptionValue,
     disableClearable,
@@ -40,13 +42,16 @@ function AutoCompleteServerSide(props) {
       isError={isError}
       multiple={multiple}
       required={required}
+      creatable={creatable}
       className={className}
+      helperText={helperText}
       renderTags={renderTags}
       placeholder={placeholder}
       submitError={submitError}
       searchField={searchField}
       renderOption={renderOption}
       fetchFunction={fetchFunction}
+      createFunction={createFunction}
       getOptionLabel={getOptionLabel}
       getOptionValue={getOptionValue}
       disableClearable={disableClearable}
@@ -75,12 +80,16 @@ AutoCompleteServerSide.propTypes = {
   renderTags: PropTypes.func,
   disableClearable: PropTypes.bool,
   multiple: PropTypes.bool,
+  creatable: PropTypes.bool,
+  createFunction: PropTypes.func,
 }
 
 AutoCompleteServerSide.defaultProps = {
   type: 'text',
   size: 'normal',
   multiple: false,
+  creatable: false,
+  createFunction: undefined,
 }
 
 export default AutoCompleteServerSide;

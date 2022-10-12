@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Autocomplete, CircularProgress, TextField } from '@mui/material';
-import { get } from 'lodash';
+import { get, isEmpty, isFunction, filter, tail } from 'lodash';
 import { useSnackbar } from 'notistack';
 
 function AutocompleteAdapter(props) {
@@ -10,11 +10,13 @@ function AutocompleteAdapter(props) {
     error,
     isError,
     required,
+    creatable,
     helperText,
     searchField,
     submitError,
     fetchFunction,
     getOptionValue,
+    createFunction,
     onChange: onChangeCallback,
     input: {
       multiple,
@@ -24,7 +26,7 @@ function AutocompleteAdapter(props) {
     ...rest
   } = props
 
-
+  const [value, setValue] = useState(multiple ? [] : null)
   const [options, setOptions] = useState([])
   const [loading, setLoading] = useState(false)
   const [searchValue, setSearchValue] = useState("")
@@ -36,7 +38,17 @@ function AutocompleteAdapter(props) {
     setLoading(true)
     fetchFunction(queryParams)
       .then((request) => {
-        setOptions(get(request.data, 'records', []))
+        if (creatable) {
+          const searchValue = get(queryParams, searchField, '')
+          const totalRecords = get(request, 'data.totalRecords', [])
+          if (!isEmpty(searchValue) && totalRecords === 0) {
+            setOptions([{ id: null, create: true, [searchField]: `Adicionar "${searchValue}"` }])
+          } else {
+            setOptions(get(request, 'data.records', []))
+          }
+        } else {
+          setOptions(get(request, 'data.records', []))
+        }
       })
       .catch((err) => {
         console.error(err)
@@ -59,6 +71,47 @@ function AutocompleteAdapter(props) {
     setQueryParams(prevParams => { return { ...prevParams, [searchField]: searchValueBuffer } })
   }, [searchValueBuffer, searchField])
 
+  const handleCreate = (event, value, reason, details) => {
+    setLoading(true)
+    const defaultErrorMessage = 'Ocorreu um erro ao adicionar o registro'
+    createFunction({ [searchField]: get(queryParams, searchField, '') })
+      .then((request) => {
+        const isSuccess = get(request, 'data.success', false)
+        if (isSuccess) {
+          const newId = get(request, 'data.data.id')
+          let newValue = { ...value, id: newId, create: false }
+          if (multiple) {
+            newValue = filter(value, x => !x.create)
+            newValue = [...newValue, {
+              id: newId,
+              [searchField]: get(queryParams, searchField, ''),
+              create: false,
+            }]
+          }
+          const newDetails = {
+            ...details,
+            option: multiple
+              ? tail(newValue)
+              : newValue
+          }
+          onChangeFunc(event, newValue, reason, newDetails)
+        } else {
+          enqueueSnackbar(get(request, 'data.message', defaultErrorMessage), {
+            variant: "error"
+          })
+        }
+      })
+      .catch((err) => {
+        console.error(err)
+        enqueueSnackbar(defaultErrorMessage, {
+          variant: "error",
+        });
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
   const getValue = (values) => {
     if (!getOptionValue) {
       return values;
@@ -71,19 +124,38 @@ function AutocompleteAdapter(props) {
     }
   }
 
-  const onChangeFunc = (event, value, reason, details,) => {
-    const gotValue = getValue(value);
-    onChange(gotValue);
+  const onChangeFunc = (event, value, reason, details) => {
+    const isCreate = multiple
+      ? !isEmpty(filter(value, x => x.create, []))
+      : get(value, 'create', false)
 
-    if (onChangeCallback) {
-      onChangeCallback(event, gotValue, reason, details);
+    if (creatable && isFunction(createFunction) && isCreate) {
+      handleCreate(event, value, reason, details)
+    } else {
+      const gotValue = getValue(value);
+      onChange(gotValue);
+      setValue(value)
+
+      if (onChangeCallback) {
+        onChangeCallback(event, gotValue, reason, details);
+      }
     }
   };
+
+  let creatableProps = {}
+  if (creatable) {
+    creatableProps = {
+      selectOnFocus: true,
+      clearOnBlur: true,
+      handleHomeEndKeys: true
+    }
+  }
 
   return (
     <Autocomplete
       multiple={multiple}
       onChange={onChangeFunc}
+      value={value}
       loading={loading}
       options={options}
       filterOptions={(x) => x}
@@ -96,6 +168,7 @@ function AutocompleteAdapter(props) {
           helperText={isError ? error || submitError : helperText}
           required={required}
           error={isError}
+          {...params}
           InputProps={{
             ...params.InputProps,
             endAdornment: (
@@ -105,10 +178,10 @@ function AutocompleteAdapter(props) {
               </>
             ),
           }}
-          {...params}
         />
       )}
       {...rest}
+      {...creatableProps}
     />
   );
 }
@@ -124,7 +197,9 @@ AutocompleteAdapter.propTypes = {
   fetchFunction: PropTypes.func.isRequired,
   getOptionValue: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  searchField: PropTypes.string.isRequired
+  searchField: PropTypes.string.isRequired,
+  creatable: PropTypes.bool.isRequired,
+  createFunction: PropTypes.func
 }
 
 AutocompleteAdapter.defaultProps = {
