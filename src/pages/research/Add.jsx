@@ -15,6 +15,7 @@ import { getKeyword, addKeyword } from '../../services/keyword'
 import { getKnowledgeArea, addKnowledgeArea } from '../../services/knowledge-area'
 import { get } from 'lodash';
 import AutoCompleteServerSide from '../../components/AutocompleteServerSide';
+import FileUpload from '../../components/FileUpload';
 
 function Add() {
   const navigate = useNavigate();
@@ -30,7 +31,8 @@ function Add() {
     language: undefined,
     institutionId: undefined,
     authorIds: [],
-    advisorIds: []
+    advisorIds: [],
+    file: undefined
   }
 
   const schema = Yup.object().shape({
@@ -44,7 +46,8 @@ function Add() {
     authorIds: Yup.array().min(1).required(),
     keyWordIds: Yup.array().min(1).required(),
     knowledgeAreaIds: Yup.array().min(1).required(),
-    advisorIds: Yup.array()
+    advisorIds: Yup.array(),
+    file: Yup.mixed().required(),
   });
 
   const validate = makeValidate(schema);
@@ -264,6 +267,15 @@ function Add() {
                     multiline
                     rows={5}
                     required={required.abstract}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FileUpload
+                    label="Arquivo"
+                    name="file"
+                    size="small"
+                    accept="application/pdf"
+                    required={required.file}
                   />
                 </Grid>
                 <Grid item xs={12}>

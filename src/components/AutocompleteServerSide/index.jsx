@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, useField } from 'react-final-form';
 import AutocompleteAdapter from './AutocompleteAdapter';

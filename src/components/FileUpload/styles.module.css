@@ -1,0 +1,19 @@
+.fileUpload {
+  display: flex;
+}
+
+.fileName {
+  margin-left: 5px !important;
+  align-self: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.paper {
+  padding: 5px;
+}
+
+.error {
+  border-color: #d32f2f !important;
+}
