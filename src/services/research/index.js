@@ -4,8 +4,8 @@ const getResearch = async (data) => {
   return httpGet("/research", data);
 }
 
-const addResearch = async (data) => {
-  return httpPost("/research", data);
+const addResearch = async (data, params) => {
+  return httpPost("/research", data, params);
 }
 
 const updateResearch = async (data) => {

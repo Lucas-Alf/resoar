@@ -13,7 +13,7 @@ import { getInstitution } from '../../services/institution'
 import { getUser } from '../../services/user'
 import { getKeyword, addKeyword } from '../../services/keyword'
 import { getKnowledgeArea, addKnowledgeArea } from '../../services/knowledge-area'
-import { get } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import AutoCompleteServerSide from '../../components/AutocompleteServerSide';
 import FileUpload from '../../components/FileUpload';
 
@@ -46,33 +46,50 @@ function Add() {
     authorIds: Yup.array().min(1).required(),
     keyWordIds: Yup.array().min(1).required(),
     knowledgeAreaIds: Yup.array().min(1).required(),
-    advisorIds: Yup.array(),
+    advisorIds: Yup.array().min(1).required(),
     file: Yup.mixed().required(),
   });
 
   const validate = makeValidate(schema);
   const required = makeRequired(schema);
 
-  const onSubmit = (values) => {
-    setLoading(true)
-    addResearch({ ...values }).then(res => {
-      const { data } = res
-      if (data.success) {
-        navigate("/app/research");
-      } else {
-        console.error(data.message)
-        enqueueSnackbar(data.message, {
-          variant: "error",
-        });
-      }
-    }).catch(err => {
+  const onSubmit = async (values) => {
+    try {
+      setLoading(true)
+      const form = document.getElementById("research-form");
+      const formData = new FormData(form);
+
+      Object.keys(values).forEach((key) => {
+        if (key !== "file") {
+          if (formData.has(key)) {
+            formData.delete(key)
+          }
+          formData.append(key, values[key])
+        }
+      })
+
+      const {
+        data: {
+          success,
+          message
+        }
+      } = await addResearch(formData, { headers: { "Content-Type": "multipart/form-data" } })
+
+      if (!success)
+        throw new Error(message)
+
+      enqueueSnackbar(message, { variant: "success" })
+      navigate("/app/research")
+    } catch (err) {
       console.error(err)
-      enqueueSnackbar(`Ocorreu um erro ao salvar a publicação`, {
-        variant: "error",
-      });
-    }).finally(() => {
+      const message = !isEmpty(get(err, 'message', ''))
+        ? get(err, 'message')
+        : `Ocorreu um erro ao salvar a publicação`
+
+      enqueueSnackbar(message, { variant: "error" })
+    } finally {
       setLoading(false)
-    })
+    }
   }
 
   const renderOptionUser = (props, option) => (
@@ -102,7 +119,7 @@ function Add() {
           validate={validate}
           loading={loading}
           render={({ handleSubmit }) => (
-            <form noValidate onSubmit={handleSubmit} autoComplete="off">
+            <form id="research-form" onSubmit={handleSubmit} noValidate>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={9} lg={10}>
                   <TextField
@@ -282,7 +299,7 @@ function Add() {
                   <LoadingButton
                     text="Salvar"
                     loading={loading}
-                    className={styles.loginButton}
+                    className={styles.submitButton}
                   />
                 </Grid>
               </Grid>
