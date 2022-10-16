@@ -25,17 +25,22 @@ function ResearchListItem(props) {
 
   const renderAvatar = (list) => {
     return (
-      <AvatarGroup max={4}>
+      <AvatarGroup
+        max={4}
+        sx={{
+          '& .MuiAvatar-root': { width: 34, height: 34, fontSize: 14 },
+        }}
+      >
         {
           map(list, (item) => {
             if (isEmpty(item.imagePath)) {
               return (
-                <Avatar key={item.id} sx={{ width: 34, height: 34 }} alt={item.name}>
+                <Avatar key={item.id} alt={item.name}>
                   {head(item.name)}
                 </Avatar>
               )
             } else {
-              return <Avatar key={item.id} sx={{ width: 34, height: 34 }} alt={item.name} src={item.imagePath} />
+              return <Avatar key={item.id} alt={item.name} src={item.imagePath} />
             }
           })
         }

@@ -62,6 +62,7 @@
 .authors {
   display: flex;
   margin-right: 15px;
+  width: 500px;
 }
 
 .textNames {

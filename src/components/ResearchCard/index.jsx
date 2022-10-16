@@ -16,7 +16,7 @@ export default function ResearchCard(props) {
   } = props
 
   return (
-    <Card sx={{ maxWidth: 345 }} variant="outlined" className={styles.card}>
+    <Card sx={{ width: 345 }} variant="outlined" className={styles.card}>
       <CardMedia
         component="img"
         height="180"
