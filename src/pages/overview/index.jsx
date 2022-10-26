@@ -16,19 +16,19 @@ function Overview() {
           title="Minhas Publicações"
           icon={FolderIcon}
           getMethod={getResearch}
-          url="/app/research"
+          url="/research"
         />
         <OverviewRow
           title="Salvos"
           icon={BookmarkBorderOutlinedIcon}
           getMethod={getResearch}
-          url="/app/bookmarks"
+          url="/bookmarks"
         />
         <OverviewRow
           title="Histórico"
           icon={HistoryIcon}
           getMethod={getResearch}
-          url="/app/history"
+          url="/history"
         />
       </Stack>
     </Container >

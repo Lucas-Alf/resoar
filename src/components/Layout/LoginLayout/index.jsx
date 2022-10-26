@@ -13,7 +13,7 @@ function LoginLayout() {
 
   useEffect(() => {
     if (isAuthenticated()) {
-      navigate('/app');
+      navigate('/overview');
     } else {
       localStorage.clear()
     }

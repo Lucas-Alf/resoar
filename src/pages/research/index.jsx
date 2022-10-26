@@ -3,7 +3,7 @@ import { Button, Container, Grid, TextField, Typography } from '@mui/material';
 import styles from './styles.module.css'
 import { getResearch } from '../../services/research'
 import { getUserId } from '../../services/auth'
-import PaginatedList from '../../components/PaginatedList';
+import PaginatedList from '../../components/PagedList';
 import ResearchListItem from '../../components/ResearchListItem';
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from "react-router-dom";
@@ -43,7 +43,7 @@ function Research() {
               color='inherit'
               variant="outlined"
               startIcon={<AddIcon />}
-              onClick={() => { navigate("/app/research/add") }}
+              onClick={() => { navigate("/research/add") }}
             >
               Incluir
             </Button>

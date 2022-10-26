@@ -9,6 +9,7 @@ import RegisterForm from "./pages/login/RegisterForm";
 import ResetPassword from "./pages/login/ResetPasswordForm";
 import RecoverForm from "./pages/login/RecoverForm";
 import NotFound from "./pages/not-found";
+import Search from "./pages/search";
 
 const routes = [
   {
@@ -23,9 +24,10 @@ const routes = [
   {
     element: <AppLayout />, children: [
       { path: "*", element: <NotFound /> },
-      { path: "/app", element: <Overview /> },
-      { path: "/app/research", element: <Research /> },
-      { path: "/app/research/add", element: <AddResearch /> },
+      { path: "/overview", element: <Overview /> },
+      { path: "/research", element: <Research /> },
+      { path: "/research/add", element: <AddResearch /> },
+      { path: "/search", element: <Search /> },
     ]
   }
 ];

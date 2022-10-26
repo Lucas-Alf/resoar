@@ -67,7 +67,7 @@ AutoCompleteServerSide.propTypes = {
   type: PropTypes.string.isRequired,
   getOptionLabel: PropTypes.func.isRequired,
   getOptionValue: PropTypes.func.isRequired,
-  required: PropTypes.any.isRequired,
+  required: PropTypes.any,
   fetchFunction: PropTypes.func.isRequired,
   searchField: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
@@ -86,6 +86,7 @@ AutoCompleteServerSide.propTypes = {
 AutoCompleteServerSide.defaultProps = {
   type: 'text',
   size: 'normal',
+  required: false,
   multiple: false,
   creatable: false,
   createFunction: undefined,

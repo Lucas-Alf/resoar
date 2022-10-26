@@ -1,0 +1,23 @@
+.container {
+  margin-top: 25px;
+}
+
+.listMargin {
+  margin-top: 15px;
+}
+
+.searchField {
+  width: 100%;
+}
+
+.submitButton {
+  width: 100%;
+}
+
+.card {
+  -webkit-box-shadow: 4px 4px 22px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 22px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}

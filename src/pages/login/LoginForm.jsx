@@ -44,7 +44,7 @@ function LoginForm() {
       const { data } = res
       if (data.success) {
         localStorage.setItem('authToken', JSON.stringify(get(data, 'data')))
-        navigate("/app");
+        navigate("/overview");
       } else {
         console.error(data.message)
         enqueueSnackbar(data.message, {

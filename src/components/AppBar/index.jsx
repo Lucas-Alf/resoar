@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { getShortUserName } from '../../services/auth'
-import { Typography } from "@mui/material";
+import { Fade, Typography } from "@mui/material";
 import styles from './styles.module.css'
 
 const Search = styled("div")(({ theme }) => ({
@@ -46,6 +46,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
+  width: "100%",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -76,13 +77,16 @@ export default function SearchAppBar({ toggleDrawer }) {
       if (!isEmpty(evt.target.value)) {
         navigate(`/search?query=${evt.target.value}`);
       } else {
-        navigate("/app");
+        navigate("/overview");
       }
+      evt.target.value = ''
     }
   };
 
+  const showSearchField = window.location.pathname !== '/search'
+
   return (
-    <AppBar position="fixed" color="inherit">
+    <AppBar position="fixed" color="inherit" >
       <Toolbar>
         <IconButton
           size="large"
@@ -103,16 +107,20 @@ export default function SearchAppBar({ toggleDrawer }) {
           />
         </Hidden>
         <Box sx={{ flexGrow: 0.8 }} />
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon color="disabled" />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Pesquisar…"
-            inputProps={{ "aria-label": "search" }}
-            onKeyDown={handleSearch}
-          />
-        </Search>
+        {
+          <Fade in={showSearchField}>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon color="disabled" />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Pesquisar…"
+                inputProps={{ "aria-label": "search" }}
+                onKeyDown={handleSearch}
+              />
+            </Search>
+          </Fade>
+        }
         <Box sx={{ flexGrow: 1 }} />
         <Hidden mdDown>
           <Typography variant="body2" style={{ fontWeight: 600 }}>{getShortUserName()}</Typography>

@@ -1,4 +1,4 @@
-import { Avatar, Box, Chip, Container, Grid, Typography } from '@mui/material';
+import { Container, Grid, Typography } from '@mui/material';
 import { Autocomplete, makeRequired, makeValidate, TextField } from 'mui-rff';
 import React, { useState } from 'react';
 import Yup from '../../components/Validations';
@@ -16,6 +16,8 @@ import { getKnowledgeArea, addKnowledgeArea } from '../../services/knowledge-are
 import { get, isEmpty, keys, isArray, forEach, toNumber } from 'lodash';
 import AutoCompleteServerSide from '../../components/AutocompleteServerSide';
 import FileUpload from '../../components/FileUpload';
+import { renderOptionUser, renderTagsUser } from '../user/utils'
+import { renderOptionInstitution } from '../institution/utils'
 
 function Add() {
   const navigate = useNavigate();
@@ -99,7 +101,7 @@ function Add() {
         throw new Error(message)
 
       enqueueSnackbar(message, { variant: "success" })
-      navigate("/app/research")
+      navigate("/research")
     } catch (err) {
       console.error(err)
       const message = !isEmpty(get(err, 'message', ''))
@@ -111,23 +113,6 @@ function Add() {
       setLoading(false)
     }
   }
-
-  const renderOptionUser = (props, option) => (
-    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-      <Avatar sx={{ height: 25, width: 25, marginRight: 1 }} alt={option.name} src={option.imagePath} />
-      {option.name}
-    </Box>
-  )
-
-  const renderTagsUser = (tagValue, getTagProps) =>
-    tagValue.map((option, index) => (
-      <Chip
-        key={option.id}
-        label={option.name}
-        avatar={<Avatar alt={option.name} src={option.imagePath} />}
-        {...getTagProps({ index })}
-      />
-    ))
 
   return (
     <Container className={styles.container} maxWidth="xl">
@@ -201,12 +186,7 @@ function Add() {
                   getOptionLabel={option => get(option, 'name')}
                   disableClearable
                   required={required.institutionId}
-                  renderOption={(props, option) => (
-                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                      <Avatar sx={{ height: 25, width: 25, marginRight: 1 }} alt={option.name} src={option.imagePath} />
-                      {option.name}
-                    </Box>
-                  )}
+                  renderOption={renderOptionInstitution}
                 />
               </Grid>
               <Grid item xs={12} md={3} lg={2}>

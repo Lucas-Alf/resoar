@@ -6,7 +6,7 @@ import { Stack } from '@mui/system';
 import PropTypes from 'prop-types';
 import ListSkeleton from './skeleton';
 
-function PaginatedList(props) {
+function PagedList(props) {
   const { enqueueSnackbar } = useSnackbar();
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(25)
@@ -73,15 +73,15 @@ function PaginatedList(props) {
   );
 }
 
-PaginatedList.propTypes = {
+PagedList.propTypes = {
   getMethod: PropTypes.func.isRequired,
   component: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
   queryParams: PropTypes.object
 }
 
-PaginatedList.defaultProps = {
+PagedList.defaultProps = {
   queryParams: {}
 }
 
 
-export default PaginatedList;
+export default PagedList;

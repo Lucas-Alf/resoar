@@ -64,22 +64,22 @@ export default function MiniDrawer({ open }) {
     {
       title: "Visão Geral",
       icon: <DashboardIcon />,
-      onClick: () => { navigate("/app"); }
+      onClick: () => { navigate("/overview"); }
     },
     {
       title: "Minhas Publicações",
       icon: <FolderIcon />,
-      onClick: () => { navigate("/app/research"); }
+      onClick: () => { navigate("/research"); }
     },
     {
       title: "Novas Publicações",
       icon: <NewspaperIcon />,
-      onClick: () => { navigate("/app/news"); }
+      onClick: () => { navigate("/news"); }
     },
     {
       title: "Salvos",
       icon: <BookmarkIcon />,
-      onClick: () => { navigate("/app/bookmarks"); }
+      onClick: () => { navigate("/bookmarks"); }
     }
   ]
 

@@ -4,6 +4,10 @@ const getResearch = async (data) => {
   return httpGet("/research", data);
 }
 
+const getResearchAdvanced = async (data) => {
+  return httpGet("/research/advanced", data);
+}
+
 const addResearch = async (data, params) => {
   return httpPost("/research", data, params);
 }
@@ -18,6 +22,7 @@ const deleteResearch = async (id) => {
 
 export {
   getResearch,
+  getResearchAdvanced,
   addResearch,
   updateResearch,
   deleteResearch
