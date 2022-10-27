@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Container, Grid, Stack, Typography } from '@mui/material';
 import { Form } from 'react-final-form';
-import { get } from 'lodash';
+import { get, isNumber } from 'lodash';
 import { getInstitution } from '../../services/institution';
 import { getUser } from '../../services/user';
 import { getKeyword } from '../../services/keyword';
@@ -18,6 +18,7 @@ import SearchField from '../../components/SearchField';
 import styles from './styles.module.css';
 import Yup from '../../components/Validations';
 import { researchType, languages } from '../research/utils';
+import LoadingButton from '../../components/LoadingButton';
 
 function Search() {
   // eslint-disable-next-line no-unused-vars
@@ -37,7 +38,8 @@ function Search() {
   }, [titleBuffer])
 
   const initialValues = {
-    year: undefined,
+    initialYear: undefined,
+    finalYear: undefined,
     type: undefined,
     language: undefined,
     institutionId: undefined,
@@ -48,7 +50,19 @@ function Search() {
   }
 
   const schema = Yup.object().shape({
-    year: Yup.number().integer().min(1).max(9999),
+    initialYear: Yup
+      .number()
+      .integer()
+      .min(1)
+      .max(9999),
+    finalYear: Yup
+      .number()
+      .integer()
+      .max(9999)
+      .when(['initialYear'], {
+        is: (initialYear) => isNumber(initialYear),
+        then: Yup.number().min(Yup.ref("initialYear"))
+      }),
     type: Yup.array(),
     language: Yup.array(),
     institutionId: Yup.array(),
@@ -66,8 +80,9 @@ function Search() {
       <Typography variant='h4' color="primary"> Pesquisar Publicações</Typography>
       <div className={styles.container}>
         <SearchField
+          name="search-field"
           value={title}
-          onChange={event => setTitle(event.target.value)}
+          onChange={setTitle}
         />
         <Grid container spacing={2}>
           <Grid item xs={3}>
@@ -88,13 +103,26 @@ function Search() {
                       onSubmit={handleSubmit}
                       noValidate
                     >
-                      <TextField
-                        label="Ano"
-                        name="year"
-                        size="small"
-                        type="number"
-                        required={required.year}
-                      />
+                      <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Ano inicial"
+                            name="initialYear"
+                            size="small"
+                            type="number"
+                            required={required.initialYear}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Ano final"
+                            name="finalYear"
+                            size="small"
+                            type="number"
+                            required={required.finalYear}
+                          />
+                        </Grid>
+                      </Grid>
                       <Autocomplete
                         multiple
                         label="Tipo de publicação"
@@ -179,6 +207,11 @@ function Search() {
                         getOptionValue={option => get(option, 'id')}
                         getOptionLabel={option => get(option, 'description')}
                         required={required.knowledgeAreaIds}
+                      />
+                      <LoadingButton
+                        text="Filtrar"
+                        variant="outlined"
+                        className={styles.submitButton}
                       />
                     </Stack>
                   )}

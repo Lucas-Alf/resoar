@@ -1,45 +1,15 @@
 import React, { forwardRef } from "react";
-import { styled, alpha } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
 import PropTypes from 'prop-types';
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.black, 0.12),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.black, 0.13),
-  },
-  width: "100%"
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  width: "100%",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%"
-  },
-}));
+import Search from './Search'
+import SearchIconWrapper from './SearchIconWrapper'
+import StyledInputBase from './StyledInputBase'
+import SearchIcon from "@mui/icons-material/Search";
 
 const SearchField = forwardRef((props, ref) => {
   const {
-    handleSearch,
+    name,
     value,
+    handleSearch,
     onChange,
     ...otherProps
   } = props
@@ -50,10 +20,13 @@ const SearchField = forwardRef((props, ref) => {
         <SearchIcon color="disabled" />
       </SearchIconWrapper>
       <StyledInputBase
+        id={`${name}-input`}
+        name={name}
+        type="text"
+        value={value}
         placeholder="Pesquisar…"
         inputProps={{ "aria-label": "search" }}
-        value={value}
-        onChange={onChange}
+        onChange={(event) => onChange(event.target.value)}
         onKeyDown={handleSearch}
       />
     </Search>
@@ -61,16 +34,18 @@ const SearchField = forwardRef((props, ref) => {
 })
 
 SearchField.displayName = "SearchField"
-SearchField.propTypes = {
-  handleSearch: PropTypes.func,
-  value: PropTypes.string,
-  onChange: PropTypes.func
-}
 
 SearchField.defaultProps = {
   value: '',
   handleSearch: () => { },
   onChange: () => { },
+}
+
+SearchField.propTypes = {
+  name: PropTypes.string.isRequired,
+  handleSearch: PropTypes.func,
+  value: PropTypes.string,
+  onChange: PropTypes.func
 }
 
 export default SearchField
