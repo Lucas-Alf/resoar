@@ -10,7 +10,7 @@ import { getResearchAdvanced } from '../../services/research';
 import { Autocomplete, makeRequired, makeValidate, TextField } from 'mui-rff';
 import { renderOptionInstitution } from '../institution/utils';
 import { renderOptionUser, renderTagsUser } from '../user/utils';
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import AutoCompleteServerSide from '../../components/AutocompleteServerSide';
 import PaginatedList from '../../components/PagedList';
 import ResearchListItem from '../../components/ResearchListItem';
@@ -21,12 +21,12 @@ import { researchType, languages } from '../research/utils';
 import LoadingButton from '../../components/LoadingButton';
 
 function Search() {
-  // eslint-disable-next-line no-unused-vars
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [title, setTitle] = useState(searchParams.get("query"))
-  const [titleBuffer, setTitleBuffer] = useState("")
-  const [queryParams, setQueryParams] = useState({})
+  const queryValue = searchParams.get("query")
+
+  const [title, setTitle] = useState(queryValue)
+  const [titleBuffer, setTitleBuffer] = useState(queryValue)
+  const [queryParams, setQueryParams] = useState({ query: queryValue })
 
   useEffect(() => {
     const timeOutId = setTimeout(() => setTitleBuffer(title), 500);
@@ -90,7 +90,7 @@ function Search() {
               <CardContent>
                 <Typography variant='h6' style={{ marginBottom: 5 }}>Busca Avançada</Typography>
                 <Form
-                  onSubmit={() => { }}
+                  onSubmit={(values) => setQueryParams(prevParams => { return { ...prevParams, ...values } })}
                   initialValues={initialValues}
                   validate={validate}
                   loading={false}
