@@ -38,11 +38,11 @@ function Search() {
   }, [titleBuffer])
 
   const initialValues = {
-    initialYear: undefined,
+    startYear: undefined,
     finalYear: undefined,
-    type: undefined,
-    language: undefined,
-    institutionId: undefined,
+    types: undefined,
+    languages: undefined,
+    institutionIds: undefined,
     authorIds: undefined,
     keyWordIds: undefined,
     knowledgeAreaIds: undefined,
@@ -50,7 +50,7 @@ function Search() {
   }
 
   const schema = Yup.object().shape({
-    initialYear: Yup
+    startYear: Yup
       .number()
       .integer()
       .min(1)
@@ -59,13 +59,13 @@ function Search() {
       .number()
       .integer()
       .max(9999)
-      .when(['initialYear'], {
-        is: (initialYear) => isNumber(initialYear),
-        then: Yup.number().min(Yup.ref("initialYear"))
+      .when(['startYear'], {
+        is: (startYear) => isNumber(startYear),
+        then: Yup.number().min(Yup.ref("startYear"))
       }),
-    type: Yup.array(),
-    language: Yup.array(),
-    institutionId: Yup.array(),
+    types: Yup.array(),
+    languages: Yup.array(),
+    institutionIds: Yup.array(),
     authorIds: Yup.array(),
     keyWordIds: Yup.array(),
     knowledgeAreaIds: Yup.array(),
@@ -74,6 +74,10 @@ function Search() {
 
   const validate = makeValidate(schema);
   const required = makeRequired(schema);
+
+  const handleSubmitForm = (values) => {
+    setQueryParams(prevParams => { return { ...prevParams, ...values } })
+  }
 
   return (
     <Container className={styles.container} maxWidth="xl">
@@ -90,7 +94,7 @@ function Search() {
               <CardContent>
                 <Typography variant='h6' style={{ marginBottom: 5 }}>Busca Avançada</Typography>
                 <Form
-                  onSubmit={(values) => setQueryParams(prevParams => { return { ...prevParams, ...values } })}
+                  onSubmit={handleSubmitForm}
                   initialValues={initialValues}
                   validate={validate}
                   loading={false}
@@ -107,10 +111,10 @@ function Search() {
                         <Grid item xs={6}>
                           <TextField
                             label="Ano inicial"
-                            name="initialYear"
+                            name="startYear"
                             size="small"
                             type="number"
-                            required={required.initialYear}
+                            required={required.startYear}
                           />
                         </Grid>
                         <Grid item xs={6}>
@@ -126,34 +130,34 @@ function Search() {
                       <Autocomplete
                         multiple
                         label="Tipo de publicação"
-                        name="type"
+                        name="types"
                         size={"small"}
                         options={researchType}
                         getOptionValue={option => option.value}
                         getOptionLabel={option => option.label}
-                        required={required.type}
+                        required={required.types}
                       />
                       <Autocomplete
                         multiple
                         label="Idioma"
-                        name="language"
+                        name="languages"
                         size={"small"}
                         options={languages}
                         getOptionValue={option => option.value}
                         getOptionLabel={option => option.label}
-                        required={required.language}
+                        required={required.languages}
                       />
                       <AutoCompleteServerSide
                         multiple
                         label="Instituição"
-                        name="institutionId"
+                        name="institutionIds"
                         size={"small"}
                         helperText='Pesquise pela instituição'
                         fetchFunction={getInstitution}
                         searchField={"name"}
                         getOptionValue={option => get(option, 'id')}
                         getOptionLabel={option => get(option, 'name')}
-                        required={required.institutionId}
+                        required={required.institutionIds}
                         renderOption={renderOptionInstitution}
                       />
                       <AutoCompleteServerSide

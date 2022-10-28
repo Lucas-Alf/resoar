@@ -4,8 +4,8 @@ const getResearch = async (data) => {
   return httpGet("/research", data);
 }
 
-const getResearchAdvanced = async (data) => {
-  return httpGet("/research/advanced", data);
+const getResearchAdvanced = async (data, params) => {
+  return httpGet("/research/advanced", data, params);
 }
 
 const addResearch = async (data, params) => {

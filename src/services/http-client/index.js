@@ -30,4 +30,18 @@ const httpDelete = async (url, params) => {
   return httpBuilder().delete(url, params);
 };
 
-export { httpGet, httpPost, httpPut, httpDelete };
+const transformRequestOptions = params => {
+  let options = '';
+  for (const key in params) {
+    if (typeof params[key] !== 'object' && params[key]) {
+      options += `${key}=${params[key]}&`;
+    } else if (typeof params[key] === 'object' && params[key] && params[key].length) {
+      params[key].forEach(el => {
+        options += `${key}=${el}&`;
+      });
+    }
+  }
+  return options ? options.slice(0, -1) : options;
+};
+
+export { httpGet, httpPost, httpPut, httpDelete, transformRequestOptions };

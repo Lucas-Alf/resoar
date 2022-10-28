@@ -5,6 +5,7 @@ import { useSnackbar } from "notistack";
 import { Stack } from '@mui/system';
 import PropTypes from 'prop-types';
 import ListSkeleton from './skeleton';
+import { transformRequestOptions } from '../../services/http-client'
 
 function PagedList(props) {
   const { enqueueSnackbar } = useSnackbar();
@@ -30,7 +31,12 @@ function PagedList(props) {
   } = props
 
   useEffect(() => {
-    getMethod({ page, pageSize, ...queryParams })
+    setLoading(true)
+    getMethod({ page, pageSize, ...queryParams }, {
+      paramsSerializer: params => {
+        return transformRequestOptions(params)
+      }
+    })
       .then((request) => {
         setRecords(get(request.data, 'records', []))
         setTotalRecords(get(request.data, 'totalRecords', 0))

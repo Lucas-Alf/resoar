@@ -1,13 +1,12 @@
-import React from 'react';
-import { Avatar, AvatarGroup, Card, CardContent, Grid, IconButton, Tooltip, Typography } from '@mui/material';
+import React, { Fragment } from 'react';
+import { Card, CardContent, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import styles from './styles.module.css';
-import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
-import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { researchType } from '../../pages/research/utils';
 import { Box } from '@mui/system';
-import { head, isEmpty, map, join, size, filter, get } from 'lodash';
+import { head, map, filter, get, size } from 'lodash';
+import { Link } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 
 function ResearchListItem(props) {
   const {
@@ -15,7 +14,6 @@ function ResearchListItem(props) {
       title,
       type,
       thumbnailKey,
-      visibility,
       abstract,
       authors,
       advisors,
@@ -23,62 +21,27 @@ function ResearchListItem(props) {
     }
   } = props
 
-  const renderAvatar = (list) => {
-    return (
-      <AvatarGroup
-        max={4}
-        sx={{
-          '& .MuiAvatar-root': { width: 34, height: 34, fontSize: 14 },
-        }}
-      >
-        {
-          map(list, (item) => {
-            if (isEmpty(item.imagePath)) {
-              return (
-                <Avatar key={item.id} alt={item.name}>
-                  {head(item.name)}
-                </Avatar>
-              )
-            } else {
-              return <Avatar key={item.id} alt={item.name} src={item.imagePath} />
-            }
-          })
-        }
-      </AvatarGroup>
-    )
+  const theme = useTheme();
+
+  const renderUsers = (list) => {
+    const totalSize = size(list) - 1
+    return map(list, (item, index) => {
+      return (
+        <Fragment key={index}>
+          <Link style={{ color: theme.palette.text.secondary }} to={`/user/${get(item, 'id')}`}>{get(item, 'name')}</Link>
+          {index != totalSize && ", "}
+        </Fragment>
+      )
+    })
   }
 
   return (
-    <Card variant="outlined" className={styles.card} sx={{ minWidth: 750 }}>
+    <Card variant="outlined" className={styles.card}>
       <CardContent>
         <div className={styles.researchType}>
           <Typography className={styles.researchTypeText} variant="body2" color="text.secondary">
             {get(head(filter(researchType, ['value', type])), 'label', '')}
           </Typography>
-          <div className={styles.actionButtons}>
-            {
-              visibility == 1
-                ?
-                <>
-                  <IconButton className={styles.button}>
-                    <Tooltip title="Compartilhar">
-                      <ShareOutlinedIcon />
-                    </Tooltip>
-                  </IconButton>
-                  <IconButton className={styles.button}>
-                    <Tooltip title="Público">
-                      <PublicOutlinedIcon />
-                    </Tooltip>
-                  </IconButton>
-                </>
-                :
-                <IconButton className={styles.button}>
-                  <Tooltip title="Privado">
-                    <LockOutlinedIcon />
-                  </Tooltip>
-                </IconButton>
-            }
-          </div>
         </div>
         <Typography variant="body2" className={styles.title}>
           {title}
@@ -92,33 +55,15 @@ function ResearchListItem(props) {
             <Typography variant="body2" color="text.secondary" className={styles.abstract}>
               {abstract}
             </Typography>
-            <Grid container className={styles.grid}>
-              <Grid item xs={12}>
-                <span>Publicado em: {year}</span>
-              </Grid>
-              <Grid item xs={5}>
-                <span>Escrito por:</span>
-                <div className={styles.authors}>
-                  {renderAvatar(authors)}
-                  <Typography variant="body2" color="text.secondary" className={styles.textNames}>
-                    {join(map(authors, (x) => x.name), ', ')}
-                  </Typography>
-                </div>
-              </Grid>
-              {
-                size(advisors) > 0
-                  ? <Grid item xs={7}>
-                    <span>Orientado por:</span>
-                    <div className={styles.authors}>
-                      {renderAvatar(advisors)}
-                      <Typography variant="body2" color="text.secondary" className={styles.textNames}>
-                        {join(map(advisors, (x) => x.name), ', ')}
-                      </Typography>
-                    </div>
-                  </Grid>
-                  : null
-              }
-            </Grid>
+            <p>
+              Publicado em: {year} <br />
+              <span className={styles.details}>
+                Escrito por: {renderUsers(authors)} <br />
+              </span>
+              <span className={styles.details}>
+                Orientado por: {renderUsers(advisors)}
+              </span>
+            </p>
           </Box>
         </Box>
       </CardContent>
