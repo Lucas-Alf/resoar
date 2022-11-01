@@ -7,6 +7,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Image from 'mui-image';
 
 export default function ResearchCard(props) {
   const {
@@ -15,12 +16,21 @@ export default function ResearchCard(props) {
     visibility
   } = props
 
+  const renderImage = () => {
+    return (
+      <Image
+        className={styles.image}
+        duration={325}
+        height={180}
+        src={`${import.meta.env.VITE_STORAGE_URL}/thumbnail/${thumbnailKey}`}
+      />
+    )
+  }
+
   return (
     <Card sx={{ width: 345 }} variant="outlined" className={styles.card}>
       <CardMedia
-        component="img"
-        height="180"
-        image={`${import.meta.env.VITE_STORAGE_URL}/thumbnail/${thumbnailKey}`}
+        component={renderImage}
         alt={title}
         className={styles.image}
       />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Container, Grid, Stack, Typography } from '@mui/material';
+import { Badge, Card, CardContent, Collapse, Container, Grid, IconButton, Stack, Typography } from '@mui/material';
 import { Form } from 'react-final-form';
-import { get, isNumber } from 'lodash';
+import { filter, get, isEmpty, isNumber, values as lodashValues } from 'lodash';
 import { getInstitution } from '../../services/institution';
 import { getUser } from '../../services/user';
 import { getKeyword } from '../../services/keyword';
@@ -19,6 +19,8 @@ import styles from './styles.module.css';
 import Yup from '../../components/Validations';
 import { researchType, languages } from '../research/utils';
 import LoadingButton from '../../components/LoadingButton';
+import FilterIcon from '@mui/icons-material/FilterAlt';
+import FilterOffIcon from '@mui/icons-material/FilterAltOff';
 
 function Search() {
   const [searchParams] = useSearchParams();
@@ -27,6 +29,8 @@ function Search() {
   const [title, setTitle] = useState(queryValue)
   const [titleBuffer, setTitleBuffer] = useState(queryValue)
   const [queryParams, setQueryParams] = useState({ query: queryValue })
+  const [showFilter, setShowFilter] = useState(window.screen.width > 900)
+  const [filterCount, setFilterCount] = useState(0)
 
   useEffect(() => {
     const timeOutId = setTimeout(() => setTitleBuffer(title), 500);
@@ -76,154 +80,181 @@ function Search() {
   const required = makeRequired(schema);
 
   const handleSubmitForm = (values) => {
-    setQueryParams(prevParams => { return { ...prevParams, ...values } })
+    setQueryParams(prevParams => { return { query: get(prevParams, 'query', ''), ...values } })
+    const propsWithValue = filter(lodashValues(values), x => !isEmpty(x))
+    setFilterCount(propsWithValue.length)
   }
 
   return (
     <Container className={styles.container} maxWidth="xl">
       <Typography variant='h4' color="primary"> Pesquisar Publicações</Typography>
       <div className={styles.container}>
-        <SearchField
-          name="search-field"
-          value={title}
-          onChange={setTitle}
-        />
+        <div className={styles.searchDiv}>
+          <IconButton
+            color="default"
+            aria-label="filter"
+            component="label"
+            sx={{ display: { md: 'none' } }}
+            onClick={() => {
+              setShowFilter(!showFilter)
+            }}
+          >
+            <Badge
+              badgeContent={filterCount}
+              color="primary"
+              style={{ marginRight: 8 }}
+            >
+              {
+                showFilter
+                  ? <FilterOffIcon />
+                  : <FilterIcon />
+              }
+            </Badge>
+          </IconButton>
+          <SearchField
+            name="search-field"
+            value={title}
+            onChange={setTitle}
+          />
+        </div>
         <Grid container spacing={2}>
-          <Grid item xs={3}>
-            <Card variant="outlined" className={styles.card}>
-              <CardContent>
-                <Typography variant='h6' style={{ marginBottom: 5 }}>Busca Avançada</Typography>
-                <Form
-                  onSubmit={handleSubmitForm}
-                  initialValues={initialValues}
-                  validate={validate}
-                  loading={false}
-                  subscription={{ submitting: true }}
-                  render={({ handleSubmit }) => (
-                    <Stack
-                      id="research-form"
-                      component="form"
-                      spacing={2}
-                      onSubmit={handleSubmit}
-                      noValidate
-                    >
-                      <Grid container spacing={1}>
-                        <Grid item xs={6}>
-                          <TextField
-                            label="Ano inicial"
-                            name="startYear"
-                            size="small"
-                            type="number"
-                            required={required.startYear}
-                          />
+          <Grid item md={3} xs={12}>
+            <Collapse in={showFilter}>
+              <Card variant="outlined" className={styles.card}>
+                <CardContent>
+                  <Typography variant='h6' style={{ marginBottom: 5 }}>Busca Avançada</Typography>
+                  <Form
+                    onSubmit={handleSubmitForm}
+                    initialValues={initialValues}
+                    validate={validate}
+                    loading={false}
+                    subscription={{ submitting: true }}
+                    render={({ handleSubmit }) => (
+                      <Stack
+                        id="research-form"
+                        component="form"
+                        spacing={2}
+                        onSubmit={handleSubmit}
+                        noValidate
+                      >
+                        <Grid container spacing={2}>
+                          <Grid item md={6} xs={12}>
+                            <TextField
+                              label="Ano inicial"
+                              name="startYear"
+                              size="small"
+                              type="number"
+                              required={required.startYear}
+                            />
+                          </Grid>
+                          <Grid item md={6} xs={12}>
+                            <TextField
+                              label="Ano final"
+                              name="finalYear"
+                              size="small"
+                              type="number"
+                              required={required.finalYear}
+                            />
+                          </Grid>
                         </Grid>
-                        <Grid item xs={6}>
-                          <TextField
-                            label="Ano final"
-                            name="finalYear"
-                            size="small"
-                            type="number"
-                            required={required.finalYear}
-                          />
-                        </Grid>
-                      </Grid>
-                      <Autocomplete
-                        multiple
-                        label="Tipo de publicação"
-                        name="types"
-                        size={"small"}
-                        options={researchType}
-                        getOptionValue={option => option.value}
-                        getOptionLabel={option => option.label}
-                        required={required.types}
-                      />
-                      <Autocomplete
-                        multiple
-                        label="Idioma"
-                        name="languages"
-                        size={"small"}
-                        options={languages}
-                        getOptionValue={option => option.value}
-                        getOptionLabel={option => option.label}
-                        required={required.languages}
-                      />
-                      <AutoCompleteServerSide
-                        multiple
-                        label="Instituição"
-                        name="institutionIds"
-                        size={"small"}
-                        helperText='Pesquise pela instituição'
-                        fetchFunction={getInstitution}
-                        searchField={"name"}
-                        getOptionValue={option => get(option, 'id')}
-                        getOptionLabel={option => get(option, 'name')}
-                        required={required.institutionIds}
-                        renderOption={renderOptionInstitution}
-                      />
-                      <AutoCompleteServerSide
-                        multiple
-                        label="Autores"
-                        name="authorIds"
-                        size={"small"}
-                        helperText='Pesquise pelo nome do autor'
-                        fetchFunction={getUser}
-                        searchField={"name"}
-                        getOptionValue={option => get(option, 'id')}
-                        getOptionLabel={option => get(option, 'name')}
-                        required={required.authorIds}
-                        renderOption={renderOptionUser}
-                        renderTags={renderTagsUser}
-                      />
-                      <AutoCompleteServerSide
-                        multiple
-                        label="Orientadores"
-                        name="advisorIds"
-                        size={"small"}
-                        helperText='Pesquise pelo nome do orientador'
-                        fetchFunction={getUser}
-                        searchField={"name"}
-                        getOptionValue={option => get(option, 'id')}
-                        getOptionLabel={option => get(option, 'name')}
-                        required={required.advisorIds}
-                        renderOption={renderOptionUser}
-                        renderTags={renderTagsUser}
-                      />
-                      <AutoCompleteServerSide
-                        multiple
-                        label="Palavras chave"
-                        name="keyWordIds"
-                        size={"small"}
-                        helperText='Pesquise pela palavra chave'
-                        fetchFunction={getKeyword}
-                        searchField={"description"}
-                        getOptionValue={option => get(option, 'id')}
-                        getOptionLabel={option => get(option, 'description')}
-                        required={required.keyWordIds}
-                      />
-                      <AutoCompleteServerSide
-                        multiple
-                        label="Áreas do conhecimento"
-                        name="knowledgeAreaIds"
-                        size={"small"}
-                        helperText='Pesquise pela área do conhecimento'
-                        fetchFunction={getKnowledgeArea}
-                        searchField={"description"}
-                        getOptionValue={option => get(option, 'id')}
-                        getOptionLabel={option => get(option, 'description')}
-                        required={required.knowledgeAreaIds}
-                      />
-                      <LoadingButton
-                        text="Filtrar"
-                        variant="outlined"
-                        className={styles.submitButton}
-                      />
-                    </Stack>
-                  )}
-                />
-              </CardContent>
-            </Card>
+                        <Autocomplete
+                          multiple
+                          label="Tipo de publicação"
+                          name="types"
+                          size={"small"}
+                          options={researchType}
+                          getOptionValue={option => option.value}
+                          getOptionLabel={option => option.label}
+                          required={required.types}
+                        />
+                        <Autocomplete
+                          multiple
+                          label="Idioma"
+                          name="languages"
+                          size={"small"}
+                          options={languages}
+                          getOptionValue={option => option.value}
+                          getOptionLabel={option => option.label}
+                          required={required.languages}
+                        />
+                        <AutoCompleteServerSide
+                          multiple
+                          label="Instituição"
+                          name="institutionIds"
+                          size={"small"}
+                          helperText='Pesquise pela instituição'
+                          fetchFunction={getInstitution}
+                          searchField={"name"}
+                          getOptionValue={option => get(option, 'id')}
+                          getOptionLabel={option => get(option, 'name')}
+                          required={required.institutionIds}
+                          renderOption={renderOptionInstitution}
+                        />
+                        <AutoCompleteServerSide
+                          multiple
+                          label="Autores"
+                          name="authorIds"
+                          size={"small"}
+                          helperText='Pesquise pelo nome do autor'
+                          fetchFunction={getUser}
+                          searchField={"name"}
+                          getOptionValue={option => get(option, 'id')}
+                          getOptionLabel={option => get(option, 'name')}
+                          required={required.authorIds}
+                          renderOption={renderOptionUser}
+                          renderTags={renderTagsUser}
+                        />
+                        <AutoCompleteServerSide
+                          multiple
+                          label="Orientadores"
+                          name="advisorIds"
+                          size={"small"}
+                          helperText='Pesquise pelo nome do orientador'
+                          fetchFunction={getUser}
+                          searchField={"name"}
+                          getOptionValue={option => get(option, 'id')}
+                          getOptionLabel={option => get(option, 'name')}
+                          required={required.advisorIds}
+                          renderOption={renderOptionUser}
+                          renderTags={renderTagsUser}
+                        />
+                        <AutoCompleteServerSide
+                          multiple
+                          label="Palavras chave"
+                          name="keyWordIds"
+                          size={"small"}
+                          helperText='Pesquise pela palavra chave'
+                          fetchFunction={getKeyword}
+                          searchField={"description"}
+                          getOptionValue={option => get(option, 'id')}
+                          getOptionLabel={option => get(option, 'description')}
+                          required={required.keyWordIds}
+                        />
+                        <AutoCompleteServerSide
+                          multiple
+                          label="Áreas do conhecimento"
+                          name="knowledgeAreaIds"
+                          size={"small"}
+                          helperText='Pesquise pela área do conhecimento'
+                          fetchFunction={getKnowledgeArea}
+                          searchField={"description"}
+                          getOptionValue={option => get(option, 'id')}
+                          getOptionLabel={option => get(option, 'description')}
+                          required={required.knowledgeAreaIds}
+                        />
+                        <LoadingButton
+                          text="Filtrar"
+                          variant="outlined"
+                          className={styles.submitButton}
+                        />
+                      </Stack>
+                    )}
+                  />
+                </CardContent>
+              </Card>
+            </Collapse>
           </Grid>
-          <Grid item xs={9}>
+          <Grid item md={9} xs={12}>
             <PaginatedList
               className={styles.listMargin}
               getMethod={getResearchAdvanced}

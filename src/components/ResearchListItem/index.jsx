@@ -7,6 +7,7 @@ import { Box } from '@mui/system';
 import { head, map, filter, get, size } from 'lodash';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
+import Image from 'mui-image';
 
 function ResearchListItem(props) {
   const {
@@ -47,9 +48,12 @@ function ResearchListItem(props) {
           {title}
         </Typography>
         <Box className={styles.box}>
-          <img
-            src={`${import.meta.env.VITE_STORAGE_URL}/thumbnail/${thumbnailKey}`}
+          <Image
             className={styles.image}
+            duration={325}
+            width={148}
+            height={192}
+            src={`${import.meta.env.VITE_STORAGE_URL}/thumbnail/${thumbnailKey}`}
           />
           <Box className={styles.contentBox}>
             <Typography variant="body2" color="text.secondary" className={styles.abstract}>

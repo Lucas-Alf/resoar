@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { TablePagination } from '@mui/material';
+import { LinearProgress, TablePagination } from '@mui/material';
 import { get, map } from 'lodash';
 import { useSnackbar } from "notistack";
 import { Stack } from '@mui/system';
 import PropTypes from 'prop-types';
-import ListSkeleton from './skeleton';
 import { transformRequestOptions } from '../../services/http-client'
 
 function PagedList(props) {
   const { enqueueSnackbar } = useSnackbar();
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(25)
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(true)
   const [records, setRecords] = useState([])
   const [totalRecords, setTotalRecords] = useState(0)
@@ -55,8 +55,9 @@ function PagedList(props) {
   return (
     <div {...otherProps}>
       {
-        !loading
-          ? (
+        loading
+          ? <LinearProgress />
+          : (
             <>
               <Stack spacing={1}>
                 {map(records, (item) => {
@@ -73,7 +74,6 @@ function PagedList(props) {
               />
             </>
           )
-          : <ListSkeleton />
       }
     </div>
   );

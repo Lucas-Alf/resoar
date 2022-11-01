@@ -21,3 +21,7 @@
   flex-direction: column;
   margin-top: 15px;
 }
+
+.searchDiv {
+  display: flex;
+}

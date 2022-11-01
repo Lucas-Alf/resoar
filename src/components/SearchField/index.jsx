@@ -10,17 +10,17 @@ const SearchField = forwardRef((props, ref) => {
     name,
     value,
     handleSearch,
-    onChange,
-    ...otherProps
+    onChange
   } = props
 
   return (
-    <Search ref={ref} {...otherProps}>
+    <Search>
       <SearchIconWrapper>
         <SearchIcon color="disabled" />
       </SearchIconWrapper>
       <StyledInputBase
         id={`${name}-input`}
+        inputRef={ref}
         name={name}
         type="text"
         value={value}
