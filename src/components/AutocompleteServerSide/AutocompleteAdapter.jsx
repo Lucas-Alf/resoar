@@ -40,7 +40,7 @@ function AutocompleteAdapter(props) {
       .then((request) => {
         if (creatable) {
           const searchValue = get(queryParams, searchField, '')
-          const totalRecords = get(request, 'data.totalRecords', [])
+          const totalRecords = get(request, 'data.totalRecords', 0)
           if (!isEmpty(searchValue) && totalRecords === 0) {
             setOptions([{ id: null, create: true, [searchField]: `Adicionar "${searchValue}"` }])
           } else {
