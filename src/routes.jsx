@@ -3,13 +3,14 @@ import LoginLayout from "./components/Layout/LoginLayout"
 import AppLayout from "./components/Layout/AppLayout"
 import Overview from "./pages/overview/"
 import Research from "./pages/research/"
-import AddResearch from "./pages/research/Add"
+import ResearchAdd from "./pages/research/Add"
 import LoginForm from "./pages/login/LoginForm";
 import RegisterForm from "./pages/login/RegisterForm";
 import ResetPassword from "./pages/login/ResetPasswordForm";
 import RecoverForm from "./pages/login/RecoverForm";
 import NotFound from "./pages/not-found";
 import Search from "./pages/search";
+import ResearchDetails from "./pages/research/Details";
 
 const routes = [
   {
@@ -26,7 +27,8 @@ const routes = [
       { path: "*", element: <NotFound /> },
       { path: "/overview", element: <Overview /> },
       { path: "/research", element: <Research /> },
-      { path: "/research/add", element: <AddResearch /> },
+      { path: "/research/add", element: <ResearchAdd /> },
+      { path: "/research/*", element: <ResearchDetails /> },
       { path: "/search", element: <Search /> },
     ]
   }

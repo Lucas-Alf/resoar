@@ -12,6 +12,7 @@ import Image from 'mui-image';
 function ResearchListItem(props) {
   const {
     item: {
+      id,
       title,
       type,
       thumbnailKey,
@@ -44,17 +45,30 @@ function ResearchListItem(props) {
             {get(head(filter(researchType, ['value', type])), 'label', '')}
           </Typography>
         </div>
-        <Typography variant="body2" className={styles.title}>
-          {title}
-        </Typography>
+        <Box
+          sx={{
+            '& a': {
+              color: theme.palette.text.primary
+            },
+            '& a:visited': {
+              color: '#5e5e5e'
+            }
+          }}
+        >
+          <Link to={`/research/${id}`} className={styles.title}>
+            {title}
+          </Link>
+        </Box>
         <Box className={styles.box}>
-          <Image
-            className={styles.image}
-            duration={325}
-            width={148}
-            height={192}
-            src={`${import.meta.env.VITE_STORAGE_URL}/thumbnail/${thumbnailKey}`}
-          />
+          <Link to={`/research/${id}`}>
+            <Image
+              className={styles.image}
+              duration={325}
+              width={148}
+              height={192}
+              src={`${import.meta.env.VITE_STORAGE_URL}/thumbnail/${thumbnailKey}`}
+            />
+          </Link>
           <Box className={styles.contentBox}>
             <Typography variant="body2" color="text.secondary" className={styles.abstract}>
               {abstract}
