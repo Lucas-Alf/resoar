@@ -17,7 +17,7 @@ import ResearchListItem from '../../components/ResearchListItem';
 import SearchField from '../../components/SearchField';
 import styles from './styles.module.css';
 import Yup from '../../components/Validations';
-import { researchType, languages } from '../research/utils';
+import { researchType, researchLanguages } from '../research/utils';
 import LoadingButton from '../../components/LoadingButton';
 import FilterIcon from '@mui/icons-material/FilterAlt';
 import FilterOffIcon from '@mui/icons-material/FilterAltOff';
@@ -172,7 +172,7 @@ function Search() {
                           label="Idioma"
                           name="languages"
                           size={"small"}
-                          options={languages}
+                          options={researchLanguages}
                           getOptionValue={option => option.value}
                           getOptionLabel={option => option.label}
                           required={required.languages}

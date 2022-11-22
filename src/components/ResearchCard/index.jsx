@@ -4,17 +4,21 @@ import { Button, Card, CardActions, CardContent, CardMedia, Divider, IconButton,
 import FolderIcon from '@mui/icons-material/Folder';
 import styles from './styles.module.css';
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Image from 'mui-image';
+import { useNavigate } from 'react-router-dom'
+import ShareResearchButton from "../ShareResearch";
 
 export default function ResearchCard(props) {
   const {
+    id,
     title,
     thumbnailKey,
     visibility
   } = props
+
+  const navigate = useNavigate();
 
   const renderImage = () => {
     return (
@@ -46,18 +50,20 @@ export default function ResearchCard(props) {
         <Button
           variant="text"
           startIcon={<VisibilityOutlinedIcon />}
-          color="inherit">
+          color="inherit"
+          onClick={() => { navigate(`/research/${id}`) }}
+        >
           Acessar
         </Button>
         {
           visibility == 1
             ?
             <>
-              <IconButton className={styles.iconToRight}>
-                <Tooltip title="Compartilhar">
-                  <ShareOutlinedIcon />
-                </Tooltip>
-              </IconButton>
+              <ShareResearchButton
+                id={id}
+                title={title}
+                className={styles.iconToRight}
+              />
               <IconButton>
                 <Tooltip title="Público">
                   <PublicOutlinedIcon />

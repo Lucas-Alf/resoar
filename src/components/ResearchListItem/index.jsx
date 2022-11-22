@@ -1,12 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Card, CardContent, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import styles from './styles.module.css';
 import { researchType } from '../../pages/research/utils';
 import { Box } from '@mui/system';
-import { head, map, filter, get, size } from 'lodash';
+import { head, filter, get } from 'lodash';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
+import { renderUserList } from '../../pages/user/utils';
 import Image from 'mui-image';
 
 function ResearchListItem(props) {
@@ -24,18 +25,6 @@ function ResearchListItem(props) {
   } = props
 
   const theme = useTheme();
-
-  const renderUsers = (list) => {
-    const totalSize = size(list) - 1
-    return map(list, (item, index) => {
-      return (
-        <Fragment key={index}>
-          <Link style={{ color: theme.palette.text.secondary }} to={`/user/${get(item, 'id')}`}>{get(item, 'name')}</Link>
-          {index != totalSize && ", "}
-        </Fragment>
-      )
-    })
-  }
 
   return (
     <Card variant="outlined" className={styles.card}>
@@ -76,10 +65,10 @@ function ResearchListItem(props) {
             <p>
               Publicado em: {year} <br />
               <span className={styles.details}>
-                Escrito por: {renderUsers(authors)} <br />
+                Escrito por: {renderUserList(authors, theme)} <br />
               </span>
               <span className={styles.details}>
-                Orientado por: {renderUsers(advisors)}
+                Orientado por: {renderUserList(advisors, theme)}
               </span>
             </p>
           </Box>

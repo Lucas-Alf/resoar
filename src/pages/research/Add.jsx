@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { Form } from 'react-final-form';
 import LoadingButton from '../../components/LoadingButton';
-import { languages, visibility, researchType } from './utils'
+import { researchLanguages, researchVisibility, researchType } from './utils'
 import { getInstitution } from '../../services/institution'
 import { getUser } from '../../services/user'
 import { getKeyword, addKeyword } from '../../services/keyword'
@@ -168,7 +168,7 @@ function Add() {
                   name="language"
                   size={"small"}
                   disableClearable
-                  options={languages}
+                  options={researchLanguages}
                   getOptionValue={option => option.value}
                   getOptionLabel={option => option.label}
                   required={required.language}
@@ -195,7 +195,7 @@ function Add() {
                   name="visibility"
                   size={"small"}
                   disableClearable
-                  options={visibility}
+                  options={researchVisibility}
                   getOptionValue={option => option.value}
                   getOptionLabel={option => option.label}
                   required={required.visibility}

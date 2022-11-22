@@ -1,4 +1,4 @@
-const languages = [
+const researchLanguages = [
   { label: 'Alemão', value: 10 },
   { label: 'Arábico', value: 1 },
   { label: 'Armênio', value: 2 },
@@ -42,13 +42,13 @@ const researchType = [
   { label: 'Tese de Doutorado', value: 9 },
 ];
 
-const visibility = [
+const researchVisibility = [
   { label: 'Público', value: 1 },
   { label: 'Privado', value: 2 }
 ];
 
 export {
-  languages,
+  researchLanguages,
   researchType,
-  visibility
+  researchVisibility
 }

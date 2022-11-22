@@ -3,9 +3,9 @@ import React, { } from 'react';
 import styles from './styles.module.css'
 import OverviewRow from '../../components/OverviewRow';
 import { getResearch } from '../../services/research';
+import { getUserSavedResearch } from '../../services/user-saved-research';
 import FolderIcon from '@mui/icons-material/FolderOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import HistoryIcon from '@mui/icons-material/History';
 
 function Overview() {
   return (
@@ -21,14 +21,8 @@ function Overview() {
         <OverviewRow
           title="Salvos"
           icon={BookmarkBorderOutlinedIcon}
-          getMethod={getResearch}
+          getMethod={getUserSavedResearch}
           url="/bookmarks"
-        />
-        <OverviewRow
-          title="Histórico"
-          icon={HistoryIcon}
-          getMethod={getResearch}
-          url="/history"
         />
       </Stack>
     </Container >
