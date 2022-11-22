@@ -12,12 +12,13 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/DashboardOutlined';
 import FolderIcon from '@mui/icons-material/FolderOutlined';
 import BookmarkIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import SearchIcon from '@mui/icons-material/Search';
 import PropTypes from 'prop-types';
 import DrawerHeader from '../DrawerHeader';
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from '@mui/material';
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
@@ -66,12 +67,17 @@ export default function MiniDrawer({ open }) {
       onClick: () => { navigate("/overview"); }
     },
     {
+      title: "Pesquisar Publicações",
+      icon: <SearchIcon />,
+      onClick: () => { navigate("/search"); }
+    },
+    {
       title: "Minhas Publicações",
       icon: <FolderIcon />,
       onClick: () => { navigate("/research"); }
     },
     {
-      title: "Salvos",
+      title: "Publicações Salvas",
       icon: <BookmarkIcon />,
       onClick: () => { navigate("/bookmarks"); }
     }
