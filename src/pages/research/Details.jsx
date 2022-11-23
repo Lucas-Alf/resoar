@@ -151,7 +151,7 @@ function Details() {
               color='warning'
               variant="contained"
               startIcon={<VisibilityIcon />}
-              onClick={() => { navigate(-1) }}
+              onClick={() => { navigate(`/research/viewer/${id}`) }}
             >
               Visualizar
             </Button>

@@ -12,6 +12,7 @@ import NotFound from "./pages/not-found";
 import Search from "./pages/search";
 import Bookmarks from "./pages/bookmarks";
 import ResearchDetails from "./pages/research/Details";
+import ResearchViewer from "./pages/research/Viewer";
 
 const routes = [
   {
@@ -29,6 +30,7 @@ const routes = [
       { path: "/overview", element: <Overview /> },
       { path: "/research", element: <Research /> },
       { path: "/research/add", element: <ResearchAdd /> },
+      { path: "/research/viewer/*", element: <ResearchViewer /> },
       { path: "/research/*", element: <ResearchDetails /> },
       { path: "/search", element: <Search /> },
       { path: "/bookmarks", element: <Bookmarks /> },
