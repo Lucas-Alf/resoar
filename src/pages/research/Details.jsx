@@ -1,7 +1,7 @@
-import { Button, Container, IconButton, LinearProgress, Tooltip, Typography } from '@mui/material';
+import { Button, CircularProgress, Container, IconButton, LinearProgress, Tooltip, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css'
-import { getResearchById } from '../../services/research'
+import { getResearchById, downloadResearch } from '../../services/research'
 import { filter, get, head, split, toNumber } from 'lodash';
 import { useSnackbar } from "notistack";
 import { useTheme, alpha } from "@mui/material/styles";
@@ -23,6 +23,7 @@ function Details() {
   const navigate = useNavigate();
   const [research, setResearch] = useState({})
   const [researchLoading, setResearchLoading] = useState(true)
+  const [downloadLoading, setDownloadLoading] = useState(false)
   const researchId = split(window.location.pathname, '/')[2]
 
   const theme = useTheme()
@@ -49,6 +50,20 @@ function Details() {
         setResearchLoading(false)
       })
   }, [researchId, enqueueSnackbar])
+
+  const handleDownload = () => {
+    setDownloadLoading(true)
+    downloadResearch(id, title)
+      .catch((err) => {
+        console.error(err)
+        enqueueSnackbar(`Ocorreu um erro ao realizar o download`, {
+          variant: "error",
+        });
+      })
+      .finally(() => {
+        setDownloadLoading(false)
+      });
+  }
 
   if (researchLoading) {
     return <LinearProgress />
@@ -143,9 +158,13 @@ function Details() {
             <Button
               color='inherit'
               variant="contained"
-              startIcon={<DownloadIcon />}
               style={{ marginLeft: 15 }}
-              onClick={() => { navigate(-1) }}
+              onClick={() => handleDownload()}
+              disabled={downloadLoading}
+              startIcon={!downloadLoading
+                ? <DownloadIcon />
+                : <CircularProgress color="inherit" size={20} />
+              }
             >
               Download
             </Button>
