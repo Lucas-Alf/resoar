@@ -50,3 +50,9 @@
   text-align: justify;
   margin-top: 50px;
 }
+
+.viewerToolbar {
+  display: flex;
+  background-color: #0000001f;
+  padding: 5px;
+}

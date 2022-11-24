@@ -13,7 +13,7 @@ export default function CustomCardContainer(props) {
     bodyMargin,
     children,
     screenUrl,
-    titleIcon: TitleIcon
+    titleIcon
   } = props
 
   return (
@@ -21,7 +21,7 @@ export default function CustomCardContainer(props) {
       <div className={styles.horizontalList}>
         <ListItem>
           <ListItemIcon style={{ minWidth: 30 }}>
-            <TitleIcon fontSize='small' />
+            {titleIcon}
           </ListItemIcon>
           <ListItemText primary={title} />
         </ListItem>
@@ -50,7 +50,7 @@ export default function CustomCardContainer(props) {
         }
       </div>
       <Divider />
-      <div className={bodyMargin && styles.box}>
+      <div className={bodyMargin ? styles.box : null}>
         {children}
       </div>
     </Paper>
@@ -58,7 +58,7 @@ export default function CustomCardContainer(props) {
 }
 
 CustomCardContainer.defaultProps = {
-  titleIcon: FolderIcon,
+  titleIcon: <FolderIcon fontSize="small" />,
   bodyMargin: true
 }
 
