@@ -1,0 +1,29 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  background-color: #0000001f;
+  height: 35px;
+}
+
+.viewerBackground {
+  background-color: #0000001f;
+}
+
+.pageNumber {
+  margin-left: 10px !important;
+}
+
+.sidePanelGrid {
+  width: 170px;
+  height: 100%;
+  /* border-right: solid 1px #D9D9D9; */
+}
+
+.previewStack {
+  margin-top: 10px;
+}
+
+.previewImage {
+  border: solid 1px #D9D9D9;
+  border-radius: 5px;
+}
