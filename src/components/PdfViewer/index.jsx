@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.module.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBackIos';
@@ -7,7 +6,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import MenuIcon from '@mui/icons-material/Menu';
 import CustomCardContainer from '../CustomCardContainer'
 import { Document, Page } from 'react-pdf/dist/esm/entry.vite';
-import { Box, Card, CircularProgress, Collapse, Divider, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material';
+import { Box, CircularProgress, Collapse, Divider, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
