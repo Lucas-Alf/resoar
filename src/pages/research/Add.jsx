@@ -41,7 +41,7 @@ function Add() {
 
   const schema = Yup.object().shape({
     title: Yup.string().max(350).required(),
-    abstract: Yup.string().max(2500),
+    abstract: Yup.string().max(5000),
     year: Yup.number().integer().min(1).max(9999).required(),
     type: Yup.number().required(),
     visibility: Yup.number().positive().integer().required(),

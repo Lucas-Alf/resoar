@@ -1,8 +1,8 @@
-import { Button, CircularProgress, Container, IconButton, LinearProgress, Tooltip, Typography } from '@mui/material';
+import { Button, Chip, CircularProgress, Container, IconButton, LinearProgress, Stack, Tooltip, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css'
 import { getResearchById, downloadResearch } from '../../services/research'
-import { filter, get, head, split, toNumber } from 'lodash';
+import { filter, get, head, join, map, split, toNumber } from 'lodash';
 import { useSnackbar } from "notistack";
 import { useTheme, alpha } from "@mui/material/styles";
 import {
@@ -78,7 +78,9 @@ function Details() {
     language,
     year,
     authors,
-    advisors
+    advisors,
+    keywords,
+    knowledgeAreas
   } = research
 
   return (
@@ -138,6 +140,9 @@ function Details() {
                   Idioma: {get(head(filter(researchLanguages, ['value', language])), 'label', '')} <br />
                 </span>
                 <span>
+                  Áreas do conhecimento: {join(map(knowledgeAreas, ({ description }) => description), ', ')} <br />
+                </span>
+                <span>
                   Escrito por: {renderUserList(authors, theme)} <br />
                 </span>
                 <span>
@@ -177,6 +182,14 @@ function Details() {
             Resumo
           </Typography>
           <p>{abstract}</p>
+          <Typography variant="h6">
+            Palavras Chave
+          </Typography>
+          <Stack className={styles.keywordsStack} direction="row" spacing={1}>
+            {map(keywords, ({ id, description }) => {
+              return <Chip key={`key-word-${id}`} label={description} />
+            })}
+          </Stack>
         </div>
       </Container>
     </>

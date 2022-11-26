@@ -9,7 +9,9 @@ import { useSnackbar } from 'notistack';
 function ShareResearchButton(props) {
   const {
     id,
+    size,
     title,
+    disabled,
     className
   } = props
 
@@ -24,11 +26,13 @@ function ShareResearchButton(props) {
 
   return (
     <>
-      <IconButton className={className} onClick={() => { setOpen(true) }}>
-        <Tooltip title="Compartilhar">
-          <ShareOutlinedIcon />
-        </Tooltip>
-      </IconButton>
+      <Tooltip arrow title="Compartilhar">
+        <span>
+          <IconButton disabled={disabled} size={size} className={className} onClick={() => { setOpen(true) }}>
+            <ShareOutlinedIcon fontSize={size} />
+          </IconButton>
+        </span>
+      </Tooltip>
       <Dialog fullWidth maxWidth="sm" onClose={() => handleClose()} open={open}>
         <DialogTitleWithCloseButton
           onClose={() => handleClose()}
@@ -49,14 +53,16 @@ function ShareResearchButton(props) {
               endAdornment: (
                 <InputAdornment position="end">
                   <Tooltip title="Copiar">
-                    <IconButton onClick={() => {
-                      navigator.clipboard.writeText(shareUrl)
-                      enqueueSnackbar(`Copiado para a área de transferência`, {
-                        variant: "info",
-                      });
-                    }} >
-                      <ContentCopyIcon />
-                    </IconButton>
+                    <span>
+                      <IconButton onClick={() => {
+                        navigator.clipboard.writeText(shareUrl)
+                        enqueueSnackbar(`Copiado para a área de transferência`, {
+                          variant: "info",
+                        });
+                      }} >
+                        <ContentCopyIcon />
+                      </IconButton>
+                    </span>
                   </Tooltip>
                 </InputAdornment>
               ),
@@ -69,15 +75,18 @@ function ShareResearchButton(props) {
 }
 
 ShareResearchButton.defaultProps = {
-  id: 0,
+  size: 'medium',
   title: '',
   className: '',
+  disabled: false,
 }
 
 ShareResearchButton.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.number.isRequired,
+  size: PropTypes.string,
   title: PropTypes.string,
   className: PropTypes.string,
+  disabled: PropTypes.bool,
 }
 
 export default ShareResearchButton

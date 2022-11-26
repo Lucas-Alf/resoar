@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import eslintPlugin from "vite-plugin-eslint";
-import mkcert from 'vite-plugin-mkcert'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import path from 'path';
 
@@ -9,7 +8,6 @@ import path from 'path';
 export default defineConfig({
   plugins: [
     react(),
-    mkcert(),
     eslintPlugin(),
     viteStaticCopy({
       targets: [

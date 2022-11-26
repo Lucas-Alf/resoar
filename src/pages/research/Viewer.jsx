@@ -2,23 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { get, split } from 'lodash';
 import { useSnackbar } from "notistack";
 import { getResearchById } from '../../services/research'
-// import { getToken, isAuthenticated } from '../../services/auth';
+import { getToken, isAuthenticated } from '../../services/auth';
 import PdfViewer from '../../components/PdfViewer';
+import { LinearProgress } from '@mui/material';
 
 function Viewer() {
   const { enqueueSnackbar } = useSnackbar();
-  // const [file, setFile] = useState(null);
+  const [file, setFile] = useState(null);
   const [research, setResearch] = useState({})
   const [researchLoading, setResearchLoading] = useState(true)
 
-  // useEffect(() => {
-  //   setFile({
-  //     url: `${import.meta.env.VITE_API_URL}/research/download/${split(window.location.pathname, '/')[3]}`,
-  //     httpHeaders: isAuthenticated && {
-  //       'Authorization': `bearer ${getToken()}`
-  //     }
-  //   })
-  // }, [])
+  useEffect(() => {
+    setFile({
+      url: `${import.meta.env.VITE_API_URL}/research/download/${split(window.location.pathname, '/')[3]}`,
+      httpHeaders: isAuthenticated && {
+        'Authorization': `bearer ${getToken()}`
+      }
+    })
+  }, [])
 
   useEffect(() => {
     setResearchLoading(true)
@@ -43,11 +44,17 @@ function Viewer() {
       })
   }, [enqueueSnackbar])
 
+  if (researchLoading) {
+    return (
+      <LinearProgress />
+    )
+  }
+
   return (
     <PdfViewer
-      // url={file}
+      id={get(research, 'id', 0)}
+      url={file}
       title={get(research, 'title', '...')}
-      loading={researchLoading}
     />
   );
 }

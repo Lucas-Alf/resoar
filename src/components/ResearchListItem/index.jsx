@@ -55,6 +55,7 @@ function ResearchListItem(props) {
               duration={325}
               width={148}
               height={192}
+              fit="fill"
               src={`${import.meta.env.VITE_STORAGE_URL}/thumbnail/${thumbnailKey}`}
             />
           </Link>

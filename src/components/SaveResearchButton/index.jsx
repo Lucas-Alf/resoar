@@ -10,6 +10,8 @@ import { get } from "lodash";
 function SaveResearchButton(props) {
   const {
     id,
+    size,
+    disabled,
     className,
     ...otherProps
   } = props
@@ -79,33 +81,41 @@ function SaveResearchButton(props) {
   } else {
     if (saved) {
       label = "Esquecer publicação"
-      icon = <BookmarkRemoveIcon />
+      icon = <BookmarkRemoveIcon fontSize={size} />
     } else {
       label = "Salvar publicação"
-      icon = <BookmarkAddIcon />
+      icon = <BookmarkAddIcon fontSize={size} />
     }
   }
 
   return (
     <>
-      <IconButton
-        className={className}
-        disabled={loading}
-        onClick={() => { handleToggleResearch() }}
-        {...otherProps}
-      >
-        <Tooltip title={label}>
-          {icon}
-        </Tooltip>
-      </IconButton>
+      <Tooltip {...otherProps} arrow title={label}>
+        <span>
+          <IconButton
+            className={className}
+            disabled={loading || disabled}
+            onClick={() => { handleToggleResearch() }}
+            size={size}
+          >
+            {icon}
+          </IconButton>
+        </span>
+      </Tooltip>
     </>
   );
 }
 
+SaveResearchButton.defaultProps = {
+  size: 'medium',
+  disabled: false,
+}
 
 SaveResearchButton.propTypes = {
-  id: PropTypes.number,
-  className: PropTypes.string
+  id: PropTypes.number.isRequired,
+  size: PropTypes.string,
+  className: PropTypes.string,
+  disabled: PropTypes.bool
 }
 
 export default SaveResearchButton
