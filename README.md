@@ -2,6 +2,13 @@
 
 # RESOAR
 
+## Research Open Access Repository
+
+RESOAR is a short for Research Open Access Repository.
+
+It consists in an academic repository for public open research.
+
+Backend project: https://github.com/Lucas-Alf/resoar-api
 ## Environment Variables
 | Name                              | Description                            |Required|
 |-----------------------------------|----------------------------------------|--------|
