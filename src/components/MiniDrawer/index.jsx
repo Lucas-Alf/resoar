@@ -87,7 +87,7 @@ export default function MiniDrawer({ open }) {
     {
       title: "Minha conta",
       icon: <PersonIcon />,
-      onClick: () => { navigate("/account"); }
+      onClick: () => { navigate("/user"); }
     },
     {
       title: "Sair",

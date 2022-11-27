@@ -7,13 +7,14 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { isEmpty } from "lodash";
 import { Link } from "react-router-dom";
 
-export default function CustomCardContainer(props) {
+function CardWithToolbar(props) {
   const {
     title,
+    titleIcon,
+    toolbarItems,
     bodyMargin,
     children,
     screenUrl,
-    titleIcon
   } = props
 
   return (
@@ -24,6 +25,7 @@ export default function CustomCardContainer(props) {
             {titleIcon}
           </ListItemIcon>
           <ListItemText primary={title} />
+          {toolbarItems}
         </ListItem>
         {
           !isEmpty(screenUrl) && (
@@ -57,15 +59,18 @@ export default function CustomCardContainer(props) {
   );
 }
 
-CustomCardContainer.defaultProps = {
+CardWithToolbar.defaultProps = {
   titleIcon: <FolderIcon fontSize="small" />,
   bodyMargin: true
 }
 
-CustomCardContainer.propTypes = {
+CardWithToolbar.propTypes = {
   title: PropTypes.string.isRequired,
   titleIcon: PropTypes.object,
   screenUrl: PropTypes.string,
   bodyMargin: PropTypes.bool,
+  toolbarItems: PropTypes.element,
   children: PropTypes.element
 }
+
+export default CardWithToolbar;

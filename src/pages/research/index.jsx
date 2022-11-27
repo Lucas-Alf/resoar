@@ -31,7 +31,7 @@ function Research() {
           <Grid item xs>
             <TextField
               id="search-field"
-              label="Filtrar publicações"
+              label="Filtrar titulo"
               size='small'
               value={title}
               onChange={event => setTitle(event.target.value)}

@@ -6,7 +6,7 @@ import { Document, Page } from 'react-pdf/dist/esm/entry.vite';
 import { map, round } from 'lodash';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
-import CustomCardContainer from '../CustomCardContainer'
+import CardWithToolbar from '../CardWithToolbar'
 import FolderIcon from '@mui/icons-material/Folder';
 import Image from 'mui-image';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -118,7 +118,7 @@ function PdfViewer(props) {
   }
 
   return (
-    <CustomCardContainer
+    <CardWithToolbar
       bodyMargin={false}
       title={title}
       titleIcon={
@@ -298,7 +298,7 @@ function PdfViewer(props) {
           </Grid>
         </Grid>
       </Stack>
-    </CustomCardContainer >
+    </CardWithToolbar >
   );
 }
 

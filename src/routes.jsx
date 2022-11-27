@@ -10,6 +10,7 @@ import ResetPassword from "./pages/login/ResetPasswordForm";
 import RecoverForm from "./pages/login/RecoverForm";
 import NotFound from "./pages/not-found";
 import Search from "./pages/search";
+import User from "./pages/user";
 import Bookmarks from "./pages/bookmarks";
 import ResearchDetails from "./pages/research/Details";
 import ResearchViewer from "./pages/research/Viewer";
@@ -34,6 +35,7 @@ const routes = [
       { path: "/research/*", element: <ResearchDetails /> },
       { path: "/search", element: <Search /> },
       { path: "/bookmarks", element: <Bookmarks /> },
+      { path: "/user/*", element: <User /> },
     ]
   }
 ];
