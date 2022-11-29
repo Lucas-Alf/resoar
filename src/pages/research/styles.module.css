@@ -1,5 +1,6 @@
 .container {
   margin-top: 25px;
+  min-width: 800px;
 }
 
 .listMargin {
@@ -21,6 +22,7 @@
   margin-bottom: -24px;
   margin-left: -24px;
   margin-right: -24px;
+  min-width: 800px;
 }
 
 .toolbarButtons {
@@ -53,4 +55,12 @@
 
 .keywordsStack {
   margin-top: 5px;
+}
+
+.titleEllipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

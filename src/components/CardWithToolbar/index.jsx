@@ -15,10 +15,11 @@ function CardWithToolbar(props) {
     bodyMargin,
     children,
     screenUrl,
+    className
   } = props
 
   return (
-    <Paper variant="outlined">
+    <Paper className={className} variant="outlined">
       <div className={styles.horizontalList}>
         <ListItem>
           <ListItemIcon style={{ minWidth: 30 }}>
@@ -61,7 +62,8 @@ function CardWithToolbar(props) {
 
 CardWithToolbar.defaultProps = {
   titleIcon: <FolderIcon fontSize="small" />,
-  bodyMargin: true
+  bodyMargin: true,
+  className: null
 }
 
 CardWithToolbar.propTypes = {
@@ -70,7 +72,8 @@ CardWithToolbar.propTypes = {
   screenUrl: PropTypes.string,
   bodyMargin: PropTypes.bool,
   toolbarItems: PropTypes.element,
-  children: PropTypes.element
+  children: PropTypes.element,
+  className: PropTypes.string
 }
 
 export default CardWithToolbar;

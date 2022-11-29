@@ -131,7 +131,7 @@ function Details() {
               <Typography variant="body2" color="text.secondary">
                 {get(head(filter(researchType, ['value', type])), 'label', '')}
               </Typography>
-              <Typography variant="h6">
+              <Typography variant="h6" className={styles.titleEllipsis}>
                 {title}
               </Typography>
               <p>

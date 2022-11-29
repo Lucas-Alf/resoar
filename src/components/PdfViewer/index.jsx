@@ -121,6 +121,7 @@ function PdfViewer(props) {
     <CardWithToolbar
       bodyMargin={false}
       title={title}
+      className={styles.cardWithToolbar}
       titleIcon={
         loading
           ? <CircularProgress color="inherit" size={20} />
