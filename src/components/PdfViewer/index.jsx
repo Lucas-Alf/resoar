@@ -20,6 +20,7 @@ import ShareResearchButton from '../ShareResearch';
 import DownloadIcon from '@mui/icons-material/Download';
 import { useSnackbar } from "notistack";
 import { downloadResearch } from '../../services/research'
+import RotateRightIcon from '@mui/icons-material/RotateRight';
 
 function PdfViewer(props) {
   const { enqueueSnackbar } = useSnackbar();
@@ -29,6 +30,7 @@ function PdfViewer(props) {
   const [previewPages, setPreviewPages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [zoomScale, setZoomScale] = useState(1);
+  const [rotation, setRotation] = useState(0);
   const [downloadLoading, setDownloadLoading] = useState(false)
 
   const options = {
@@ -193,7 +195,7 @@ function PdfViewer(props) {
             <span>
               <IconButton
                 aria-label="zoom-in-button"
-                disabled={zoomScale >= 1.5 || disabled}
+                disabled={zoomScale >= 1.8 || disabled}
                 onClick={() => { setZoomScale(prev => prev + 0.1) }}
                 size='small'
               >
@@ -210,6 +212,21 @@ function PdfViewer(props) {
                 size='small'
               >
                 <ZoomOutIcon fontSize='small' />
+              </IconButton>
+            </span>
+          </Tooltip>
+          <Divider orientation="vertical" flexItem />
+          <Tooltip arrow title="Rotacionar">
+            <span>
+              <IconButton
+                aria-label="rotate-button"
+                disabled={disabled || downloadLoading}
+                size='small'
+                onClick={() => {
+                  setRotation(prev => prev >= 270 ? 0 : prev + 90)
+                }}
+              >
+                <RotateRightIcon fontSize='small' />
               </IconButton>
             </span>
           </Tooltip>
@@ -294,7 +311,11 @@ function PdfViewer(props) {
               noData="Arquivo não especificado"
               error="Não foi possível carregar o arquivo"
             >
-              <Page scale={zoomScale} pageNumber={pageNumber || 1} />
+              <Page
+                scale={zoomScale}
+                rotate={rotation}
+                pageNumber={pageNumber || 1}
+              />
             </Document>
           </Grid>
         </Grid>
