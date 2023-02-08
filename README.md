@@ -2,13 +2,15 @@
 
 # RESOAR
 
-## Research Open Access Repository
-
 RESOAR is a short for Research Open Access Repository.
 
-It consists in an academic repository for public open research.
+This project consists of an Institutional Repository to store PDF files of academic publications.
 
-Backend project: https://github.com/Lucas-Alf/resoar-api
+The frontend are mainly developed in JavaScript, using React, Vite and Material UI.
+
+The backend is developed as a Web API in dotnet (C#), using Entity Framework and PostgreSQL.
+
+Backend repo: https://github.com/Lucas-Alf/resoar-api
 
 ## Preview
 ### Login Page
