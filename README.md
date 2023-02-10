@@ -12,19 +12,6 @@ The backend is developed as a Web API in dotnet (C#), using Entity Framework and
 
 Backend repo: https://github.com/Lucas-Alf/resoar-api
 
-## Preview
-### Login Page
-![Login Page](https://github.com/Lucas-Alf/tcc-setrem/blob/main/img/resoar-login.png?raw=true "Login Page")
-
-### Search Page
-![Search Page](https://github.com/Lucas-Alf/tcc-setrem/blob/main/img/resoar-search.png?raw=true "Search Page")
-
-### Research Page
-![Research Page](https://github.com/Lucas-Alf/tcc-setrem/blob/main/img/resoar-view-research.png?raw=true "Research Page")
-
-### PDF Reader
-![PDF Reader](https://github.com/Lucas-Alf/tcc-setrem/blob/main/img/resoar-pdf-viewer.png?raw=true "PDF Reader")
-
 ## Environment Variables
 | Name                              | Description                            |Required|
 |-----------------------------------|----------------------------------------|--------|
