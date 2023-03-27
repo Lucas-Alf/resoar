@@ -6,7 +6,6 @@ import { filter, get, head, join, map, split, toNumber } from 'lodash';
 import { useSnackbar } from "notistack";
 import { useTheme, alpha } from "@mui/material/styles";
 import {
-  ArrowBack as ArrowBackIcon,
   Download as DownloadIcon,
   FormatQuote as FormatQuoteIcon,
   Visibility as VisibilityIcon
@@ -88,14 +87,6 @@ function Details() {
       <div style={{ backgroundColor: alpha(theme.palette.common.black, 0.12) }} className={styles.greyBlock}>
         <Container className={styles.container} maxWidth="lg">
           <div className={styles.toolbarButtons}>
-            <Button
-              color='inherit'
-              variant="text"
-              startIcon={<ArrowBackIcon />}
-              onClick={() => { navigate(-1) }}
-            >
-              Voltar
-            </Button>
             <SaveResearchButton
               id={toNumber(researchId)}
               style={{ marginLeft: 'auto' }}
@@ -125,7 +116,7 @@ function Details() {
               width={163}
               height={230}
               fit="fill"
-              src={`${import.meta.env.VITE_STORAGE_URL}/thumbnail/${thumbnailKey}`}
+              src={`${import.meta.env.VITE_STORAGE_URL}/resoar/thumbnail/${thumbnailKey}`}
             />
             <div className={styles.detailsTextBlock}>
               <Typography variant="body2" color="text.secondary">

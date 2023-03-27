@@ -44,19 +44,19 @@ function ResearchListItem(props) {
             }
           }}
         >
-          <Link to={`/research/${id}`} className={styles.title}>
+          <Link to={`/research/${id}`} target="_blank" className={styles.title}>
             {title}
           </Link>
         </Box>
         <Box className={styles.box}>
-          <Link to={`/research/${id}`}>
+          <Link to={`/research/${id}`} target="_blank">
             <Image
               className={styles.image}
               duration={325}
               width={148}
               height={192}
               fit="fill"
-              src={`${import.meta.env.VITE_STORAGE_URL}/thumbnail/${thumbnailKey}`}
+              src={`${import.meta.env.VITE_STORAGE_URL}/resoar/thumbnail/${thumbnailKey}`}
             />
           </Link>
           <Box className={styles.contentBox}>

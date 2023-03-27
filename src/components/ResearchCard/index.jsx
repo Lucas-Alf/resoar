@@ -26,7 +26,7 @@ export default function ResearchCard(props) {
         className={styles.image}
         duration={325}
         height={180}
-        src={`${import.meta.env.VITE_STORAGE_URL}/thumbnail/${thumbnailKey}`}
+        src={`${import.meta.env.VITE_STORAGE_URL}/resoar/thumbnail/${thumbnailKey}`}
       />
     )
   }
@@ -46,7 +46,7 @@ export default function ResearchCard(props) {
           </Typography>
         </Tooltip>
       </CardContent>
-      <CardActions>
+      <CardActions style={{ paddingTop: 0 }}>
         <Button
           variant="text"
           startIcon={<VisibilityOutlinedIcon />}

@@ -101,7 +101,7 @@ function User() {
               alt={name}
               src={
                 !isEmpty(imagePath)
-                  ? `${import.meta.env.VITE_STORAGE_URL}/profile/${imagePath}`
+                  ? `${import.meta.env.VITE_STORAGE_URL}/resoar/profile/${imagePath}`
                   : null
               }
               sx={{
